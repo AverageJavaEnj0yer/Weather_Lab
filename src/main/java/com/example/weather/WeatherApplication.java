@@ -24,14 +24,17 @@ public class WeatherApplication {
         public String getWeatherByCity(@RequestParam String city) {
             RestTemplate restTemplate = new RestTemplate();
             String apiKey = "71f05c123c7e6404aea1d9abf558f5db";
-            return restTemplate.getForObject(WEATHER_URL_BY_CITY, String.class, city, apiKey);
+            String apiResponse = restTemplate.getForObject(WEATHER_URL_BY_CITY, String.class, city, apiKey);
+            return "Это ваш прогноз погоды: " + apiResponse;
         }
 
         @GetMapping("/weatherByCoordinates")
         public String getWeatherByCoordinates(@RequestParam String lat, @RequestParam String lon) {
             RestTemplate restTemplate = new RestTemplate();
             String apiKey = "71f05c123c7e6404aea1d9abf558f5db";
-            return restTemplate.getForObject(WEATHER_URL_BY_COORDINATES, String.class, lat, lon, apiKey);
+            String apiResponse = restTemplate.getForObject(WEATHER_URL_BY_COORDINATES, String.class, lat, lon, apiKey);
+            return "Это ваш прогноз погоды: " + apiResponse;
         }
+
     }
 }
