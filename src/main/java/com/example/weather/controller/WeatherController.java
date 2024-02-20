@@ -1,31 +1,31 @@
 package com.example.weather.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.example.weather.service.WeatherService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class WeatherController {
 
-    @Value("${OpenWeatherMap.api.key}")
-    private String apiKey;
+    private final WeatherService weatherService;
 
-    private static final String WEATHER_URL_BY_CITY = "https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}";
-    private static final String WEATHER_URL_BY_COORDINATES = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}";
+    @Autowired
+    public WeatherController(WeatherService weatherService) {
+        this.weatherService = weatherService;
+    }
 
     @GetMapping("/weather")
-    public String getWeatherByCity(@RequestParam String city) {
-        RestTemplate restTemplate = new RestTemplate();
-        String apiResponse = restTemplate.getForObject(WEATHER_URL_BY_CITY, String.class, city, apiKey);
-        return "Это ваш прогноз погоды: " + apiResponse;
+    public ResponseEntity<Object> getWeatherByCity(@RequestParam String city) {
+        Object apiResponse = weatherService.getWeatherByCity(city);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @GetMapping("/weatherByCoordinates")
-    public String getWeatherByCoordinates(@RequestParam String lat, @RequestParam String lon) {
-        RestTemplate restTemplate = new RestTemplate();
-        String apiResponse = restTemplate.getForObject(WEATHER_URL_BY_COORDINATES, String.class, lat, lon, apiKey);
-        return "Это ваш прогноз погоды: " + apiResponse;
+    public ResponseEntity<Object> getWeatherByCoordinates(@RequestParam String lat, @RequestParam String lon) {
+        Object apiResponse = weatherService.getWeatherByCoordinates(lat, lon);
+        return ResponseEntity.ok(apiResponse);
     }
 }
