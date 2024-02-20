@@ -1,4 +1,4 @@
-package com.example.weather;
+package com.example.weather.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class WeatherController {
 
-    @Value("${openweathermap.api.key}")
+    @Value("${OpenWeatherMap.api.key}")
     private String apiKey;
 
     private static final String WEATHER_URL_BY_CITY = "https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}";
@@ -29,4 +29,3 @@ public class WeatherController {
         return "Это ваш прогноз погоды: " + apiResponse;
     }
 }
-
