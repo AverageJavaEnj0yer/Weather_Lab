@@ -29,3 +29,4 @@ public class WeatherController {
         return "Это ваш прогноз погоды: " + apiResponse;
     }
 }
+
