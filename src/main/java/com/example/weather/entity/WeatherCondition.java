@@ -3,6 +3,7 @@ package com.example.weather.entity;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class WeatherCondition {
@@ -12,7 +13,7 @@ public class WeatherCondition {
     private String main;
     private String description;
     private String icon;
-
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "weatherdata_weathercondition",

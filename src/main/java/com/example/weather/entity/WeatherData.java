@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class WeatherData {
@@ -21,6 +22,7 @@ public class WeatherData {
     @JsonBackReference
     private City city;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "weatherdata_weathercondition",
