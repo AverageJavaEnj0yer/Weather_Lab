@@ -20,14 +20,14 @@ public class CityService {
         return cityRepository.findById(id).orElse(null);
     }
 
+    public City getCityByLonAndLat(Double lon, Double lat) {
+        return cityRepository.findByLonAndLat(lon, lat);
+    }
+
     public City createCity(City city) {
-        // Проверяем, существует ли уже город с таким именем
         if (cityRepository.existsByName(city.getName())) {
-            // Если город существует, можно выбросить исключение или вернуть null
-            // Здесь выбрасывается исключение, но можно использовать и другие подходы
             throw new RuntimeException("Город с таким именем уже существует");
         }
-        // Если город с таким именем не существует, сохраняем его
         return cityRepository.save(city);
     }
 
@@ -38,7 +38,9 @@ public class CityService {
                 throw new RuntimeException("Город с таким именем уже существует");
             }
             cityToUpdate.setName(newCityData.getName());
-            // Другие поля для обновления...
+            cityToUpdate.setLon(newCityData.getLon()); // Update longitude
+            cityToUpdate.setLat(newCityData.getLat()); // Update latitude
+            // Update other fields as needed...
             return cityRepository.save(cityToUpdate);
         }
         return null;

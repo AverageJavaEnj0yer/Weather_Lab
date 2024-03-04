@@ -1,5 +1,6 @@
 package com.example.weather.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,12 +11,14 @@ public class WeatherData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDate date;
     private double temperature;
     private double humidity;
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
+    @JsonBackReference
     private City city;
 
     @ManyToMany

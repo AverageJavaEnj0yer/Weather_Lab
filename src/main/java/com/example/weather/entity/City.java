@@ -12,16 +12,21 @@ public class City {
 
     private String name;
 
+    private Double lon; // Longitude
+    private Double lat; // Latitude
+
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private List<WeatherData> weatherDataList = new ArrayList<>();
 
-// Constructors, getters, setters...
+    // Constructors, getters, setters...
 
     public City() {
     }
 
-    public City(String name) {
+    public City(String name, Double lon, Double lat) {
         this.name = name;
+        this.lon = lon;
+        this.lat = lat;
     }
 
     public Long getId() {
@@ -38,6 +43,22 @@ public class City {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 
     public List<WeatherData> getWeatherDataList() {
