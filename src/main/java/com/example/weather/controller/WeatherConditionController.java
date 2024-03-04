@@ -2,6 +2,7 @@ package com.example.weather.controller;
 
 import com.example.weather.entity.WeatherCondition;
 import com.example.weather.service.WeatherConditionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @RequestMapping("/weatherConditions")
 public class WeatherConditionController {
 
-
+    @Autowired
     private WeatherConditionService weatherConditionService;
 
     @GetMapping

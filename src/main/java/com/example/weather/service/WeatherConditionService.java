@@ -2,6 +2,7 @@ package com.example.weather.service;
 
 import com.example.weather.entity.WeatherCondition;
 import com.example.weather.repository.WeatherConditionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class WeatherConditionService {
-
+    @Autowired
     private WeatherConditionRepository weatherConditionRepository;
 
     public List<WeatherCondition> getAllWeatherConditions() {
