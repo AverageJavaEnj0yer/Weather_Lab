@@ -2,7 +2,6 @@ package com.example.weather.controller;
 
 import com.example.weather.entity.City;
 import com.example.weather.service.CityService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,7 +2,6 @@ package com.example.weather.service;
 
 import com.example.weather.entity.WeatherData;
 import com.example.weather.repository.WeatherDataRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
