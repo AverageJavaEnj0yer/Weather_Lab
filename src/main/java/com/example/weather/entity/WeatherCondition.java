@@ -13,7 +13,12 @@ public class WeatherCondition {
     private String description;
     private String icon;
 
-    @ManyToMany(mappedBy = "weatherConditions")
+    @ManyToMany
+    @JoinTable(
+            name = "weatherdata_weathercondition",
+            joinColumns = @JoinColumn(name = "weathercondition_id"),
+            inverseJoinColumns = @JoinColumn(name = "weatherdata_id")
+    )
     private List<WeatherData> weatherDataList = new ArrayList<>();
 
     // Constructors, getters, setters...
