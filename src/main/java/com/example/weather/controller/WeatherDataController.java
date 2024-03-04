@@ -12,7 +12,6 @@ import java.util.List;
 @RequestMapping("/weatherData")
 public class WeatherDataController {
 
-    @Autowired
     private WeatherDataService weatherDataService;
 
     @GetMapping

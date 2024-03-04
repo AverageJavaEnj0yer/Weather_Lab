@@ -12,7 +12,6 @@ public class WeatherController {
 
     private final WeatherService weatherService;
 
-    @Autowired
     public WeatherController(WeatherService weatherService) {
         this.weatherService = weatherService;
     }

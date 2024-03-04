@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class WeatherConditionService {
-    @Autowired
+
     private WeatherConditionRepository weatherConditionRepository;
 
     public List<WeatherCondition> getAllWeatherConditions() {

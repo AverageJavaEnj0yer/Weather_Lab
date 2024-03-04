@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class WeatherDataService {
-    @Autowired
+
     private WeatherDataRepository weatherDataRepository;
 
     public List<WeatherData> getAllWeatherData() {

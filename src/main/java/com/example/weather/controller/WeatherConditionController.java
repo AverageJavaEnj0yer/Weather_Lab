@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/weatherConditions")
 public class WeatherConditionController {
 
-    @Autowired
+
     private WeatherConditionService weatherConditionService;
 
     @GetMapping

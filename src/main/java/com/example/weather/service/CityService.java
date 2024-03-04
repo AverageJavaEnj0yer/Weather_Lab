@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class CityService {
-    @Autowired
+
     private CityRepository cityRepository;
 
     public List<City> getAllCities() {
