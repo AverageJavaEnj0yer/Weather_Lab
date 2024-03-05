@@ -3,6 +3,8 @@ package com.example.weather.entity;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -13,13 +15,15 @@ public class WeatherCondition {
     private String main;
     private String description;
     private String icon;
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "weatherdata_weathercondition",
             joinColumns = @JoinColumn(name = "weathercondition_id"),
             inverseJoinColumns = @JoinColumn(name = "weatherdata_id")
     )
+    @JsonBackReference
+
     private List<WeatherData> weatherDataList = new ArrayList<>();
 
     // Constructors, getters, setters...

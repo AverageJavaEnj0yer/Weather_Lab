@@ -22,7 +22,7 @@ public class WeatherData {
     @JsonBackReference
     private City city;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "weatherdata_weathercondition",
