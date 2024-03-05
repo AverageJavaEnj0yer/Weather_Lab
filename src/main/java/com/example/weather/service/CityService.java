@@ -2,15 +2,19 @@ package com.example.weather.service;
 
 import com.example.weather.entity.City;
 import com.example.weather.repository.CityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.weather.exception.CityAlreadyExistsException;
+
 
 import java.util.List;
 
 @Service
 public class CityService {
-    @Autowired
-    private CityRepository cityRepository;
+    private final CityRepository cityRepository;
+
+    public CityService(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
 
     public List<City> getAllCities() {
         return cityRepository.findAll();
@@ -26,7 +30,7 @@ public class CityService {
 
     public City createCity(City city) {
         if (cityRepository.existsByName(city.getName())) {
-            throw new RuntimeException("Город с таким именем уже существует");
+            throw new CityAlreadyExistsException("Город с таким именем уже существует");
         }
         return cityRepository.save(city);
     }
@@ -35,7 +39,7 @@ public class CityService {
         City cityToUpdate = cityRepository.findById(id).orElse(null);
         if (cityToUpdate != null) {
             if (cityRepository.existsByNameAndIdNot(newCityData.getName(), id)) {
-                throw new RuntimeException("Город с таким именем уже существует");
+                throw new CityAlreadyExistsException("Город с таким именем уже существует");
             }
             cityToUpdate.setName(newCityData.getName());
             cityToUpdate.setLon(newCityData.getLon()); // Update longitude

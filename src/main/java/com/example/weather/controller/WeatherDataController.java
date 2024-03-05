@@ -2,7 +2,6 @@ package com.example.weather.controller;
 
 import com.example.weather.entity.WeatherData;
 import com.example.weather.service.WeatherDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/weatherData")
 public class WeatherDataController {
 
-    @Autowired
-    private WeatherDataService weatherDataService;
+    private final WeatherDataService weatherDataService;
+
+    public WeatherDataController(WeatherDataService weatherDataService) {
+        this.weatherDataService = weatherDataService;
+    }
 
     @GetMapping
     public List<WeatherData> getAllWeatherData() {
