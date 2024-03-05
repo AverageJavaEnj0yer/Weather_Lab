@@ -13,7 +13,7 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+//fghffh
     private String name;
 
     private Double lon; // Longitude
