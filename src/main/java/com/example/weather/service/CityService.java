@@ -4,16 +4,19 @@ import com.example.weather.entity.City;
 import com.example.weather.repository.CityRepository;
 import com.example.weather.exception.CityAlreadyExistsException;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
+import com.example.weather.cache.WeatherDataCache;
+
 
 @Service
 public class CityService {
     private final CityRepository cityRepository;
+    private final WeatherDataCache weatherDataCache;
 
-    public CityService(CityRepository cityRepository) {
+    public CityService(CityRepository cityRepository, WeatherDataCache weatherDataCache) {
         this.cityRepository = cityRepository;
+        this.weatherDataCache = weatherDataCache;
     }
 
     public List<City> getAllCities() {
@@ -55,7 +58,13 @@ public class CityService {
     }
 
     public List<City> getCitiesByWeatherDataDate(LocalDate date) {
-        return cityRepository.findCitiesByWeatherDataDate(date);
+        List<City> cachedCities = weatherDataCache.getCitiesFromCache(date);
+        if (!cachedCities.isEmpty()) {
+            System.out.println("Cache was used " + date);
+            return cachedCities;
+        }
+        List<City> cities = cityRepository.findCitiesByWeatherDataDate(date);
+        weatherDataCache.addToCache(date, cities);
+        return cities;
     }
 }
-
