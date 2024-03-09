@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class WeatherDataCache {
-    private final int maxCacheSize = 1; // Максимальное количество записей в кэше
+    private static final int maxCacheSize = 1; // Максимальное количество записей в кэше
     private final Map<LocalDate, List<City>> cache = new ConcurrentHashMap<>();
     private final LinkedList<LocalDate> accessOrder = new LinkedList<>();
 

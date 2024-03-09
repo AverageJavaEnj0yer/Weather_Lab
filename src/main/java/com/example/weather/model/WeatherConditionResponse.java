@@ -1,7 +1,5 @@
 package com.example.weather.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class WeatherConditionResponse {
     private String main;
     private String description;
