@@ -12,12 +12,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class WeatherDataCache {
-    private final int MAX_CACHE_SIZE = 1; // Максимальное количество записей в кэше
+    private final int maxCacheSize = 1; // Максимальное количество записей в кэше
     private final Map<LocalDate, List<City>> cache = new ConcurrentHashMap<>();
     private final LinkedList<LocalDate> accessOrder = new LinkedList<>();
 
     public synchronized void addToCache(LocalDate date, List<City> cities) {
-        if (cache.size() >= MAX_CACHE_SIZE) {
+        if (cache.size() >= maxCacheSize) {
             LocalDate oldestDate = accessOrder.pollFirst();
             cache.remove(oldestDate);
         }

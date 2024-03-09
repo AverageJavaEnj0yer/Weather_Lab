@@ -13,9 +13,9 @@ public class WeatherService {
     private static final String WEATHER_URL_BY_CITY = "https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}";
     private static final String WEATHER_URL_BY_COORDINATES = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}";
 
-    public Object getWeatherByCity(String city) {
+    public WeatherApiResponse getWeatherByCity(String city) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(WEATHER_URL_BY_CITY, Object.class, city, apiKey);
+        return restTemplate.getForObject(WEATHER_URL_BY_CITY, WeatherApiResponse.class, city, apiKey);
     }
 
     public Object getWeatherByCoordinates(String lat, String lon) {

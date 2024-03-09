@@ -3,14 +3,17 @@ package com.example.weather.service;
 import com.example.weather.entity.City;
 import com.example.weather.repository.CityRepository;
 import com.example.weather.exception.CityAlreadyExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import com.example.weather.cache.WeatherDataCache;
 
-
 @Service
 public class CityService {
+    private static final Logger logger = LoggerFactory.getLogger(CityService.class);
     private final CityRepository cityRepository;
     private final WeatherDataCache weatherDataCache;
 
@@ -60,7 +63,7 @@ public class CityService {
     public List<City> getCitiesByWeatherDataDate(LocalDate date) {
         List<City> cachedCities = weatherDataCache.getCitiesFromCache(date);
         if (!cachedCities.isEmpty()) {
-            System.out.println("Cache was used " + date);
+            logger.info("Cache was used for date: {}", date);
             return cachedCities;
         }
         List<City> cities = cityRepository.findCitiesByWeatherDataDate(date);
