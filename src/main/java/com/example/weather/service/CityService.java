@@ -42,7 +42,7 @@ public class CityService {
     }
 
     public City createCity(City city) {
-        logger.info("Creating city: {}", city.getName());
+        logger.info("Creating city");
         if (cityRepository.existsByName(city.getName())) {
             throw new CityAlreadyExistsException("City with this name already exists.");
         }
