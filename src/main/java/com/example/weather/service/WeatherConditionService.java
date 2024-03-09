@@ -4,6 +4,7 @@ import com.example.weather.entity.WeatherCondition;
 import com.example.weather.repository.WeatherConditionRepository;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,10 @@ public class WeatherConditionService {
 
     public List<WeatherCondition> getAllWeatherConditions() {
         return weatherConditionRepository.findAll();
+    }
+
+    public WeatherCondition findByMainAndDescription(String main, String description) {
+        return weatherConditionRepository.findByMainAndDescription(main, description);
     }
 
     public WeatherCondition getWeatherConditionById(Long id) {

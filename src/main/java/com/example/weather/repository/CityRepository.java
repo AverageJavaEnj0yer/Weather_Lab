@@ -16,8 +16,7 @@ public interface CityRepository extends JpaRepository<City, Long> {
     boolean existsByName(String name);
     boolean existsByNameAndIdNot(String name, Long id);
     City findByLonAndLat(Double lon, Double lat);
-
-    // Кастомный запрос для получения городов по дате погодных данных
+    City findByName(String name); // Добавленный метод для поиска города по имени
     @Query("SELECT DISTINCT c FROM City c JOIN c.weatherDataList wd WHERE wd.date = :date")
     List<City> findCitiesByWeatherDataDate(@Param("date") LocalDate date);
 }

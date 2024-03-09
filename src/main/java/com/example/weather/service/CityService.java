@@ -1,15 +1,15 @@
 package com.example.weather.service;
 
 import com.example.weather.entity.City;
-import com.example.weather.repository.CityRepository;
 import com.example.weather.exception.CityAlreadyExistsException;
+import com.example.weather.cache.WeatherDataCache;
+import com.example.weather.repository.CityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import com.example.weather.cache.WeatherDataCache;
 
 @Service
 public class CityService {
@@ -21,6 +21,11 @@ public class CityService {
         this.cityRepository = cityRepository;
         this.weatherDataCache = weatherDataCache;
     }
+
+    public City findByName(String name) {
+        return cityRepository.findByName(name);
+    }
+
 
     public List<City> getAllCities() {
         return cityRepository.findAll();
