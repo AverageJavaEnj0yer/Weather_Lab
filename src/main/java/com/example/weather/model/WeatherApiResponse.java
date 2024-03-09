@@ -1,9 +1,4 @@
-// В файле WeatherApiResponse.java
 package com.example.weather.model;
-
-import com.example.weather.model.Coord;
-import com.example.weather.model.MainData;
-import com.example.weather.model.WeatherConditionResponse;
 
 import java.util.List;
 

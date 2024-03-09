@@ -34,13 +34,10 @@ public class WeatherController {
     public ResponseEntity<Object> getWeatherByCity(@RequestParam String city) {
         WeatherApiResponse apiResponse = weatherService.getWeatherByCity(city);
         if (apiResponse != null) {
-            double temperature = apiResponse.getMain().getTemp();
-            double humidity = apiResponse.getMain().getHumidity();
-
             WeatherData weatherData = new WeatherData();
             weatherData.setDate(LocalDate.now());
-            weatherData.setTemperature(temperature);
-            weatherData.setHumidity(humidity);
+            weatherData.setTemperature(apiResponse.getMain().getTemp());
+            weatherData.setHumidity(apiResponse.getMain().getHumidity());
 
             City cityEntity = cityService.findByName(city);
             if (cityEntity == null) {
@@ -77,4 +74,3 @@ public class WeatherController {
         return ResponseEntity.ok(apiResponse);
     }
 }
-
