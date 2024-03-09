@@ -26,46 +26,51 @@ public class CityService {
         return cityRepository.findByName(name);
     }
 
-
     public List<City> getAllCities() {
+        logger.info("Fetching all cities.");
         return cityRepository.findAll();
     }
 
     public City getCityById(Long id) {
+        logger.info("Fetching city by ID: {}", id);
         return cityRepository.findById(id).orElse(null);
     }
 
     public City getCityByLonAndLat(Double lon, Double lat) {
+        logger.info("Fetching city by longitude: {}, latitude: {}", lon, lat);
         return cityRepository.findByLonAndLat(lon, lat);
     }
 
     public City createCity(City city) {
+        logger.info("Creating city: {}", city.getName());
         if (cityRepository.existsByName(city.getName())) {
-            throw new CityAlreadyExistsException("Город с таким именем уже существует");
+            throw new CityAlreadyExistsException("City with this name already exists.");
         }
         return cityRepository.save(city);
     }
 
     public City updateCity(Long id, City newCityData) {
+        logger.info("Updating city with ID: {}", id);
         City cityToUpdate = cityRepository.findById(id).orElse(null);
         if (cityToUpdate != null) {
             if (cityRepository.existsByNameAndIdNot(newCityData.getName(), id)) {
-                throw new CityAlreadyExistsException("Город с таким именем уже существует");
+                throw new CityAlreadyExistsException("City with this name already exists.");
             }
             cityToUpdate.setName(newCityData.getName());
-            cityToUpdate.setLon(newCityData.getLon()); // Update longitude
-            cityToUpdate.setLat(newCityData.getLat()); // Update latitude
-            // Update other fields as needed...
+            cityToUpdate.setLon(newCityData.getLon());
+            cityToUpdate.setLat(newCityData.getLat());
             return cityRepository.save(cityToUpdate);
         }
         return null;
     }
 
     public void deleteCity(Long id) {
+        logger.info("Deleting city with ID: {}", id);
         cityRepository.deleteById(id);
     }
 
     public List<City> getCitiesByWeatherDataDate(LocalDate date) {
+        logger.info("Fetching cities by weather data date: {}", date);
         List<City> cachedCities = weatherDataCache.getCitiesFromCache(date);
         if (!cachedCities.isEmpty()) {
             logger.info("Cache was used for date: {}", date);

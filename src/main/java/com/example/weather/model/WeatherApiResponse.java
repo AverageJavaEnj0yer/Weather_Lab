@@ -1,5 +1,5 @@
 // В файле WeatherApiResponse.java
-package com.example.weather.service;
+package com.example.weather.model;
 
 import com.example.weather.model.Coord;
 import com.example.weather.model.MainData;
