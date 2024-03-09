@@ -1,4 +1,4 @@
-package com.example.weather.entity;
+package com.example.weather.model;
 
 public class Coord {
     private double lon;

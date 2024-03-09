@@ -1,11 +1,13 @@
 package com.example.weather.service;
 
-import com.example.weather.entity.Coord;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.weather.model.Coord;
+import com.example.weather.model.WeatherConditionResponse;
+import java.util.List;
 
 public class WeatherApiResponse {
     private Coord coord;
     private String name;
+    private List<WeatherConditionResponse> weather; // Добавляем поле для списка погодных условий
 
     public Coord getCoord() {
         return coord;
@@ -21,5 +23,13 @@ public class WeatherApiResponse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<WeatherConditionResponse> getWeather() {
+        return weather;
+    }
+
+    public void setWeather(List<WeatherConditionResponse> weather) {
+        this.weather = weather;
     }
 }
