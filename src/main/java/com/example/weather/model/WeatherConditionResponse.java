@@ -29,3 +29,4 @@ public class WeatherConditionResponse {
         this.icon = icon;
     }
 }
+
