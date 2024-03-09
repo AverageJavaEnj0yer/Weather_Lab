@@ -2,10 +2,10 @@ package com.example.weather.service;
 
 import com.example.weather.entity.City;
 import com.example.weather.repository.CityRepository;
-import org.springframework.stereotype.Service;
 import com.example.weather.exception.CityAlreadyExistsException;
+import org.springframework.stereotype.Service;
 
-
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -53,4 +53,9 @@ public class CityService {
     public void deleteCity(Long id) {
         cityRepository.deleteById(id);
     }
+
+    public List<City> getCitiesByWeatherDataDate(LocalDate date) {
+        return cityRepository.findCitiesByWeatherDataDate(date);
+    }
 }
+

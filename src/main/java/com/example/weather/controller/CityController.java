@@ -5,6 +5,7 @@ import com.example.weather.service.CityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,6 +41,12 @@ public class CityController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/weatherData")
+    public List<City> getCitiesByWeatherDataDate(@RequestParam String date) {
+        LocalDate parsedDate = LocalDate.parse(date);
+        return cityService.getCitiesByWeatherDataDate(parsedDate);
     }
 
     @PostMapping
