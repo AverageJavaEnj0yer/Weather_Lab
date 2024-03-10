@@ -23,8 +23,6 @@ public class City {
     @JsonManagedReference
     private List<WeatherData> weatherDataList = new ArrayList<>();
 
-    // Constructors, getters, setters...
-
     public City() {
     }
 

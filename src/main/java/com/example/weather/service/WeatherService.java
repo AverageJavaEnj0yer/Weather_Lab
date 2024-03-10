@@ -28,10 +28,11 @@ public class WeatherService {
         return restTemplate.getForObject(WEATHER_URL_BY_CITY, WeatherApiResponse.class, city, apiKey);
     }
 
-    public Object getWeatherByCoordinates(String lat, String lon) {
+    public WeatherApiResponse getWeatherByCoordinates(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(WEATHER_URL_BY_COORDINATES, WeatherApiResponse.class, lat, lon, apiKey);
     }
+
 
     public void createWeatherData(WeatherData weatherData) {
         weatherDataRepository.save(weatherData);

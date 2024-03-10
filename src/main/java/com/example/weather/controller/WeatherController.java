@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,34 +33,7 @@ public class WeatherController {
     public ResponseEntity<Object> getWeatherByCity(@RequestParam String city) {
         WeatherApiResponse apiResponse = weatherService.getWeatherByCity(city);
         if (apiResponse != null) {
-            WeatherData weatherData = new WeatherData();
-            weatherData.setDate(LocalDate.now());
-            weatherData.setTemperature(apiResponse.getMain().getTemp());
-            weatherData.setHumidity(apiResponse.getMain().getHumidity());
-
-            City cityEntity = cityService.findByName(city);
-            if (cityEntity == null) {
-                cityEntity = new City(city, apiResponse.getCoordinates().getLon(), apiResponse.getCoordinates().getLat());
-                cityEntity = cityService.createCity(cityEntity);
-            }
-
-            weatherData.setCity(cityEntity);
-
-            List<WeatherConditionResponse> weatherConditions = apiResponse.getWeather();
-            List<WeatherCondition> weatherConditionEntities = new ArrayList<>();
-            for (WeatherConditionResponse condition : weatherConditions) {
-                WeatherCondition weatherConditionEntity = weatherConditionService.findByMainAndDescription(condition.getMain(), condition.getDescription());
-                if (weatherConditionEntity == null) {
-                    weatherConditionEntity = new WeatherCondition(condition.getMain(), condition.getDescription(), condition.getIcon());
-                    weatherConditionEntity = weatherConditionService.createWeatherCondition(weatherConditionEntity);
-                }
-                weatherConditionEntities.add(weatherConditionEntity);
-            }
-
-            weatherData.setWeatherConditions(weatherConditionEntities);
-
-            weatherService.createWeatherData(weatherData);
-
+            saveWeatherData(apiResponse);
             return ResponseEntity.ok(apiResponse);
         } else {
             return ResponseEntity.notFound().build();
@@ -70,7 +42,42 @@ public class WeatherController {
 
     @GetMapping("/weatherByCoordinates")
     public ResponseEntity<Object> getWeatherByCoordinates(@RequestParam String lat, @RequestParam String lon) {
-        Object apiResponse = weatherService.getWeatherByCoordinates(lat, lon);
-        return ResponseEntity.ok(apiResponse);
+        WeatherApiResponse apiResponse = weatherService.getWeatherByCoordinates(lat, lon);
+        if (apiResponse != null) {
+            saveWeatherData(apiResponse);
+            return ResponseEntity.ok(apiResponse);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    private void saveWeatherData(WeatherApiResponse apiResponse) {
+        WeatherData weatherData = new WeatherData();
+        weatherData.setDate(LocalDate.now());
+        weatherData.setTemperature(apiResponse.getMain().getTemp());
+        weatherData.setHumidity(apiResponse.getMain().getHumidity());
+
+        City cityEntity = cityService.findByName(apiResponse.getName());
+        if (cityEntity == null) {
+            cityEntity = new City(apiResponse.getName(), apiResponse.getCoordinates().getLon(), apiResponse.getCoordinates().getLat());
+            cityEntity = cityService.createCity(cityEntity);
+        }
+
+        weatherData.setCity(cityEntity);
+
+        List<WeatherConditionResponse> weatherConditions = apiResponse.getWeather();
+        List<WeatherCondition> weatherConditionEntities = new ArrayList<>();
+        for (WeatherConditionResponse condition : weatherConditions) {
+            WeatherCondition weatherConditionEntity = weatherConditionService.findByMainAndDescription(condition.getMain(), condition.getDescription());
+            if (weatherConditionEntity == null) {
+                weatherConditionEntity = new WeatherCondition(condition.getMain(), condition.getDescription(), condition.getIcon());
+                weatherConditionEntity = weatherConditionService.createWeatherCondition(weatherConditionEntity);
+            }
+            weatherConditionEntities.add(weatherConditionEntity);
+        }
+
+        weatherData.setWeatherConditions(weatherConditionEntities);
+
+        weatherService.createWeatherData(weatherData);
     }
 }

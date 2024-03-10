@@ -24,8 +24,6 @@ public class WeatherCondition {
 
     private List<WeatherData> weatherDataList = new ArrayList<>();
 
-    // Constructors, getters, setters...
-
     public WeatherCondition() {
     }
 
