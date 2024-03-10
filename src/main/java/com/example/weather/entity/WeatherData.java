@@ -24,13 +24,11 @@ public class WeatherData {
     //@JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "weatherdata_weathercondition",
-            joinColumns = @JoinColumn(name = "weatherdata_id"),
-            inverseJoinColumns = @JoinColumn(name = "weathercondition_id")
+            name = "weather_data_weather_condition",
+            joinColumns = @JoinColumn(name = "weatherData_id"),
+            inverseJoinColumns = @JoinColumn(name = "weatherCondition_id")
     )
     private List<WeatherCondition> weatherConditions = new ArrayList<>();
-
-    // Constructors, getters, setters...
 
     public WeatherData() {
     }

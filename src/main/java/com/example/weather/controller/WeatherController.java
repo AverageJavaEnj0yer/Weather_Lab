@@ -41,7 +41,7 @@ public class WeatherController {
 
             City cityEntity = cityService.findByName(city);
             if (cityEntity == null) {
-                cityEntity = new City(city, apiResponse.getCoord().getLon(), apiResponse.getCoord().getLat());
+                cityEntity = new City(city, apiResponse.getCoordinates().getLon(), apiResponse.getCoordinates().getLat());
                 cityEntity = cityService.createCity(cityEntity);
             }
 

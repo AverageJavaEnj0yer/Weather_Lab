@@ -1,6 +1,6 @@
 package com.example.weather.model;
 
-public class Coord {
+public class Coordinates {
     private double lon;
     private double lat;
 

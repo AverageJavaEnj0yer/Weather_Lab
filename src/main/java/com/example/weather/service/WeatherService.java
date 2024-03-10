@@ -30,7 +30,7 @@ public class WeatherService {
 
     public Object getWeatherByCoordinates(String lat, String lon) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(WEATHER_URL_BY_COORDINATES, Object.class, lat, lon, apiKey);
+        return restTemplate.getForObject(WEATHER_URL_BY_COORDINATES, WeatherApiResponse.class, lat, lon, apiKey);
     }
 
     public void createWeatherData(WeatherData weatherData) {

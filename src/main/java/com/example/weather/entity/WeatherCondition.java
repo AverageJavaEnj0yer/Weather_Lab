@@ -16,9 +16,9 @@ public class WeatherCondition {
     //@JsonIgnore
     @ManyToMany
     @JoinTable(
-            name = "weatherdata_weathercondition",
-            joinColumns = @JoinColumn(name = "weathercondition_id"),
-            inverseJoinColumns = @JoinColumn(name = "weatherdata_id")
+            name = "weather_data_weather_condition",
+            joinColumns = @JoinColumn(name = "weatherCondition_id"),
+            inverseJoinColumns = @JoinColumn(name = "weatherData_id")
     )
     @JsonBackReference
 

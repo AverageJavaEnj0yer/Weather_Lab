@@ -2,6 +2,7 @@ package com.example.weather.controller;
 
 import com.example.weather.entity.WeatherCondition;
 import com.example.weather.service.WeatherConditionService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +32,12 @@ public class WeatherConditionController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @Hidden
     @PostMapping
     public WeatherCondition createWeatherCondition(@RequestBody WeatherCondition weatherCondition) {
         return weatherConditionService.createWeatherCondition(weatherCondition);
     }
-
+    @Hidden
     @PutMapping("/{id}")
     public ResponseEntity<WeatherCondition> updateWeatherCondition(@PathVariable Long id, @RequestBody WeatherCondition newWeatherConditionData) {
         WeatherCondition updatedWeatherCondition = weatherConditionService.updateWeatherCondition(id, newWeatherConditionData);
@@ -46,7 +47,7 @@ public class WeatherConditionController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @Hidden
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWeatherCondition(@PathVariable Long id) {
         weatherConditionService.deleteWeatherCondition(id);
