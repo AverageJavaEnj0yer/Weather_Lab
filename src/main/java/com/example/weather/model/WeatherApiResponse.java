@@ -1,20 +1,19 @@
 package com.example.weather.model;
 
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WeatherApiResponse {
-    @JsonProperty("Coord")
+
     private Coordinates coordinates;
     private MainData main;
     private String name;
     private List<WeatherConditionResponse> weather;
 
-    public Coordinates getCoordinates() {
+    public Coordinates getCoord() {
         return coordinates;
     }
 
-    public void setCoordinates(Coordinates coordinates) {
+    public void setCoord(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
