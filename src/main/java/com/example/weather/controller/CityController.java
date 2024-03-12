@@ -49,12 +49,12 @@ public class CityController {
         LocalDate parsedDate = LocalDate.parse(date);
         return cityService.getCitiesByWeatherDataDate(parsedDate);
     }
-    @Hidden
+
     @PostMapping
     public City createCity(@RequestBody City city) {
         return cityService.createCity(city);
     }
-    @Hidden
+
     @PutMapping("/{id}")
     public ResponseEntity<City> updateCity(@PathVariable Long id, @RequestBody City newCityData) {
         City updatedCity = cityService.updateCity(id, newCityData);
@@ -64,7 +64,7 @@ public class CityController {
             return ResponseEntity.notFound().build();
         }
     }
-    @Hidden
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         cityService.deleteCity(id);

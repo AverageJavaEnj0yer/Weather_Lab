@@ -32,12 +32,12 @@ public class WeatherConditionController {
             return ResponseEntity.notFound().build();
         }
     }
-    @Hidden
+
     @PostMapping
     public WeatherCondition createWeatherCondition(@RequestBody WeatherCondition weatherCondition) {
         return weatherConditionService.createWeatherCondition(weatherCondition);
     }
-    @Hidden
+
     @PutMapping("/{id}")
     public ResponseEntity<WeatherCondition> updateWeatherCondition(@PathVariable Long id, @RequestBody WeatherCondition newWeatherConditionData) {
         WeatherCondition updatedWeatherCondition = weatherConditionService.updateWeatherCondition(id, newWeatherConditionData);
@@ -47,7 +47,7 @@ public class WeatherConditionController {
             return ResponseEntity.notFound().build();
         }
     }
-    @Hidden
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWeatherCondition(@PathVariable Long id) {
         weatherConditionService.deleteWeatherCondition(id);
