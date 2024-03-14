@@ -2,7 +2,6 @@ package com.example.weather.controller;
 
 import com.example.weather.entity.WeatherCondition;
 import com.example.weather.service.WeatherConditionService;
-import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

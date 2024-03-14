@@ -53,6 +53,10 @@ public class CityService {
         logger.info("Updating city with ID: {}", id);
         City cityToUpdate = cityRepository.findById(id).orElse(null);
         if (cityToUpdate != null) {
+            if (!cityToUpdate.getName().equals(newCityData.getName())) {
+                weatherDataCache.clearCache();
+                logger.info("Weather data cache cleared due to city update");
+            }
             if (cityRepository.existsByNameAndIdNot(newCityData.getName(), id)) {
                 throw new CityAlreadyExistsException("City with this name already exists.");
             }
@@ -67,6 +71,8 @@ public class CityService {
     public void deleteCity(Long id) {
         logger.info("Deleting city with ID: {}", id);
         cityRepository.deleteById(id);
+        weatherDataCache.clearCache();
+        logger.info("Weather data cache cleared due to city deletion");
     }
 
     public List<City> getCitiesByWeatherDataDate(LocalDate date) {
