@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,6 +48,15 @@ public class CityService {
             throw new CityAlreadyExistsException("City with this name already exists.");
         }
         return cityRepository.save(city);
+    }
+    public List<City> createBulkCities(List<City> cities) {
+        List<City> createdCities = new ArrayList<>();
+        for (City city : cities) {
+            if (!cityRepository.existsByName(city.getName())) {
+                createdCities.add(cityRepository.save(city));
+            }
+        }
+        return createdCities;
     }
 
     public City updateCity(Long id, City newCityData) {
