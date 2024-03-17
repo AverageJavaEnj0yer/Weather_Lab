@@ -33,6 +33,22 @@ public class CityController {
         }
     }
 
+    @GetMapping("/coordinates")
+    public ResponseEntity<City> getCityByLonAndLat(@RequestParam Double lon, @RequestParam Double lat) {
+        City city = cityService.getCityByLonAndLat(lon, lat);
+        if (city != null) {
+            return ResponseEntity.ok(city);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/weatherData")
+    public List<City> getCitiesByWeatherDataDate(@RequestParam String date) {
+        LocalDate parsedDate = LocalDate.parse(date);
+        return cityService.getCitiesByWeatherDataDate(parsedDate);
+    }
+
     @PostMapping
     public City createCity(@RequestBody City city) {
         return cityService.createCity(city);
