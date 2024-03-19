@@ -32,11 +32,6 @@ public class CityServiceTest {
     @InjectMocks
     private CityService cityService;
 
-    @Before
-    public void setup() {
-        // Setup any initialization needed before tests
-    }
-
     @Test
     public void testGetAllCities() {
         // Setup
@@ -170,4 +165,3 @@ public class CityServiceTest {
     }
 
 }
-
