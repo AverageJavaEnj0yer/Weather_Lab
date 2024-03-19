@@ -5,6 +5,11 @@ import com.example.weather.repository.WeatherConditionRepository;
 import com.example.weather.service.WeatherConditionService;
 import com.example.weather.cache.WeatherDataCache;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.doNothing;
+
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +32,7 @@ class WeatherConditionServiceTest {
     private WeatherConditionService weatherConditionService;
 
     @Test
-     void testGetWeatherConditionById() {
+    void testGetWeatherConditionById() {
         WeatherCondition expectedCondition = new WeatherCondition("Clouds", "Some clouds in the sky", "01d");
         expectedCondition.setId(1L);
         when(weatherConditionRepository.findById(1L)).thenReturn(Optional.of(expectedCondition));
@@ -38,7 +43,7 @@ class WeatherConditionServiceTest {
     }
 
     @Test
-     void testCreateWeatherCondition() {
+    void testCreateWeatherCondition() {
         WeatherCondition newCondition = new WeatherCondition("Rain", "Heavy rain", "01d");
         when(weatherConditionRepository.save(newCondition)).thenReturn(newCondition);
 
@@ -48,7 +53,7 @@ class WeatherConditionServiceTest {
     }
 
     @Test
-     void testUpdateWeatherCondition() {
+    void testUpdateWeatherCondition() {
         WeatherCondition existingCondition = new WeatherCondition("Snow", "Heavy snowfall", "s01d");
         existingCondition.setId(1L);
         WeatherCondition updatedConditionData = new WeatherCondition("Snow", "Light snowfall", "01d");
@@ -61,9 +66,16 @@ class WeatherConditionServiceTest {
     }
 
     @Test
-     void testDeleteWeatherCondition() {
+    void testDeleteWeatherCondition() {
+        // Arrange
         WeatherCondition existingCondition = new WeatherCondition("Sunny", "Clear skies", "01d");
         existingCondition.setId(1L);
+        doNothing().when(weatherConditionRepository).deleteById(1L);
+
+        // Act
         weatherConditionService.deleteWeatherCondition(1L);
+
+        // Assert
+        verify(weatherConditionRepository, times(1)).deleteById(1L);
     }
 }

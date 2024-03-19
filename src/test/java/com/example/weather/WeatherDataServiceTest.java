@@ -54,12 +54,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
     }
 
     @Test
-     void testDeleteWeatherData() {
-        WeatherData testData = new WeatherData();
-        testData.setId(1L);
-        doNothing().when(weatherDataRepository).deleteById(1L);
+    void testDeleteWeatherData() {
+       WeatherData testData = new WeatherData();
+       testData.setId(1L);
+       doNothing().when(weatherDataRepository).deleteById(1L);
 
-        weatherDataService.deleteWeatherData(1L);
+       weatherDataService.deleteWeatherData(1L);
 
+       // Проверка, что метод deleteById вызывался один раз с аргументом 1L
+       verify(weatherDataRepository, times(1)).deleteById(1L);
     }
-}
+
+ }

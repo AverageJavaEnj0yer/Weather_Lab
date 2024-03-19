@@ -67,7 +67,7 @@ class WeatherControllerTest {
         weatherConditions.add(condition1);
         apiResponse.setWeather(weatherConditions);
 
-        when(weatherService.getWeatherByCity(eq(cityName))).thenReturn(apiResponse);
+        when(weatherService.getWeatherByCity(cityName)).thenReturn(apiResponse);
 
         // Act
         ResponseEntity<Object> response = weatherController.getWeatherByCity(cityName);
@@ -75,10 +75,11 @@ class WeatherControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(apiResponse, response.getBody());
-        verify(weatherService, times(1)).getWeatherByCity(eq(cityName));
+        verify(weatherService, times(1)).getWeatherByCity(cityName);
         verify(cityService, times(1)).createCity(any());
         verify(weatherConditionService, times(1)).createWeatherCondition(any());
     }
+
 
 
     @Test
@@ -115,11 +116,12 @@ class WeatherControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(apiResponse, response.getBody());
-        verify(weatherService, times(1)).getWeatherByCoordinates(eq(lat), eq(lon));
+        verify(weatherService, times(1)).getWeatherByCoordinates(lat, lon);
         verify(cityService, times(1)).createCity(any());
         verify(weatherConditionService, times(1)).createWeatherCondition(any());
-
     }
+
+
 
 
 }
