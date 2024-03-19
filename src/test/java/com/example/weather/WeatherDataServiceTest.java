@@ -16,19 +16,19 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class WeatherDataServiceTest {
+ class WeatherDataServiceTest {
 
     private WeatherDataService weatherDataService;
     private WeatherDataRepository weatherDataRepository;
 
     @BeforeEach
-    public void setUp() {
+     void setUp() {
         weatherDataRepository = mock(WeatherDataRepository.class);
         weatherDataService = new WeatherDataService(weatherDataRepository);
     }
 
     @Test
-    public void testCreateWeatherData() {
+     void testCreateWeatherData() {
         WeatherData testData = new WeatherData();
         when(weatherDataRepository.save(testData)).thenReturn(testData);
 
@@ -39,7 +39,7 @@ public class WeatherDataServiceTest {
     }
 
     @Test
-    public void testUpdateWeatherData() {
+     void testUpdateWeatherData() {
         WeatherData testData = new WeatherData();
         testData.setId(1L);
         when(weatherDataRepository.findById(1L)).thenReturn(Optional.of(testData));
@@ -54,7 +54,7 @@ public class WeatherDataServiceTest {
     }
 
     @Test
-    public void testDeleteWeatherData() {
+     void testDeleteWeatherData() {
         WeatherData testData = new WeatherData();
         testData.setId(1L);
         doNothing().when(weatherDataRepository).deleteById(1L);

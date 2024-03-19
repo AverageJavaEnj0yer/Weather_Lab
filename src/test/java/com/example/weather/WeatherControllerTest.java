@@ -27,7 +27,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 
 @ExtendWith(MockitoExtension.class)
-public class WeatherControllerTest {
+class WeatherControllerTest {
 
     @Mock
     private WeatherService weatherService;
@@ -45,7 +45,7 @@ public class WeatherControllerTest {
     private WeatherController weatherController;
 
     @Test
-    public void testGetWeatherByCity() {
+    void testGetWeatherByCity() {
         // Arrange
         String cityName = "London";
         WeatherApiResponse apiResponse = new WeatherApiResponse();
@@ -81,9 +81,8 @@ public class WeatherControllerTest {
     }
 
 
-
     @Test
-    public void testGetWeatherByCoordinates() {
+    void testGetWeatherByCoordinates() {
         // Arrange
         String lat = "51.5074";
         String lon = "0.1278";

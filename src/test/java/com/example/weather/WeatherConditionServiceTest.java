@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class WeatherConditionServiceTest {
+class WeatherConditionServiceTest {
 
     @Mock
     private WeatherConditionRepository weatherConditionRepository;
@@ -27,7 +27,7 @@ public class WeatherConditionServiceTest {
     private WeatherConditionService weatherConditionService;
 
     @Test
-    public void testGetWeatherConditionById() {
+     void testGetWeatherConditionById() {
         WeatherCondition expectedCondition = new WeatherCondition("Clouds", "Some clouds in the sky", "01d");
         expectedCondition.setId(1L);
         when(weatherConditionRepository.findById(1L)).thenReturn(Optional.of(expectedCondition));
@@ -38,7 +38,7 @@ public class WeatherConditionServiceTest {
     }
 
     @Test
-    public void testCreateWeatherCondition() {
+     void testCreateWeatherCondition() {
         WeatherCondition newCondition = new WeatherCondition("Rain", "Heavy rain", "01d");
         when(weatherConditionRepository.save(newCondition)).thenReturn(newCondition);
 
@@ -48,7 +48,7 @@ public class WeatherConditionServiceTest {
     }
 
     @Test
-    public void testUpdateWeatherCondition() {
+     void testUpdateWeatherCondition() {
         WeatherCondition existingCondition = new WeatherCondition("Snow", "Heavy snowfall", "s01d");
         existingCondition.setId(1L);
         WeatherCondition updatedConditionData = new WeatherCondition("Snow", "Light snowfall", "01d");
@@ -61,7 +61,7 @@ public class WeatherConditionServiceTest {
     }
 
     @Test
-    public void testDeleteWeatherCondition() {
+     void testDeleteWeatherCondition() {
         WeatherCondition existingCondition = new WeatherCondition("Sunny", "Clear skies", "01d");
         existingCondition.setId(1L);
         weatherConditionService.deleteWeatherCondition(1L);
