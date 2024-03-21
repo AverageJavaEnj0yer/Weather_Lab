@@ -6,6 +6,7 @@ import com.example.weather.cache.WeatherDataCache;
 import com.example.weather.repository.CityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,10 +18,13 @@ public class CityService {
     private static final Logger logger = LoggerFactory.getLogger(CityService.class);
     private final CityRepository cityRepository;
     private final WeatherDataCache weatherDataCache;
+    private final RequestCounterService requestCounterService;
 
-    public CityService(CityRepository cityRepository, WeatherDataCache weatherDataCache) {
+    @Autowired
+    public CityService(CityRepository cityRepository, WeatherDataCache weatherDataCache, RequestCounterService requestCounterService) {
         this.cityRepository = cityRepository;
         this.weatherDataCache = weatherDataCache;
+        this.requestCounterService = requestCounterService;
     }
 
     public City findByName(String name) {
@@ -90,10 +94,13 @@ public class CityService {
         List<City> cachedCities = weatherDataCache.getCitiesFromCache(date);
         if (!cachedCities.isEmpty()) {
             logger.info("Cache was used for date: {}", date);
+            requestCounterService.incrementCounterByDate(date); // Увеличиваем счетчик обращений по дате
             return cachedCities;
         }
         List<City> cities = cityRepository.findCitiesByWeatherDataDate(date);
         weatherDataCache.addToCache(date, cities);
+        requestCounterService.incrementCounterByDate(date); // Увеличиваем счетчик обращений по дате
         return cities;
     }
+
 }
