@@ -26,7 +26,11 @@ public class WeatherDataCache {
     }
 
     public List<City> getCitiesFromCache(LocalDate date) {
-        return cache.getOrDefault(date, new ArrayList<>());
+        List<City> cachedCities = cache.get(date);
+        if (cachedCities == null) {
+            return null; // Возвращаем null, если результат не найден в кэше
+        }
+        return new ArrayList<>(cachedCities);
     }
 
     public void clearCache() {

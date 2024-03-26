@@ -90,14 +90,17 @@ public class CityService {
     }
 
     public List<City> getCitiesByWeatherDataDate(LocalDate date) {
-        logger.info("Fetching cities by weather data date: {}", date);
+        //logger.info("Fetching cities by weather data date: {}", date);
         List<City> cachedCities = weatherDataCache.getCitiesFromCache(date);
-        if (!cachedCities.isEmpty()) {
+        if (cachedCities != null && !cachedCities.isEmpty()) {
             logger.info("Cache was used for date: {}", date);
             requestCounterService.incrementCounterByDate(date); // Увеличиваем счетчик обращений по дате
             return cachedCities;
         }
+        // Если результат не найден в кэше или кэш пуст, получаем результат из базы данных
         List<City> cities = cityRepository.findCitiesByWeatherDataDate(date);
+        logger.info("Database was used for date: {}", date);
+        // Добавляем результат в кэш
         weatherDataCache.addToCache(date, cities);
         requestCounterService.incrementCounterByDate(date); // Увеличиваем счетчик обращений по дате
         return cities;

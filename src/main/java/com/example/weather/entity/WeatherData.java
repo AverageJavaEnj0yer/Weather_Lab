@@ -22,7 +22,8 @@ public class WeatherData {
     private City city;
 
     //@JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+
     @JoinTable(
             name = "weather_data_weather_condition",
             joinColumns = @JoinColumn(name = "weatherData_id"),

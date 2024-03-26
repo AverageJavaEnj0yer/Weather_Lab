@@ -14,7 +14,8 @@ public class WeatherCondition {
     private String description;
     private String icon;
     //@JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+
     @JoinTable(
             name = "weather_data_weather_condition",
             joinColumns = @JoinColumn(name = "weatherCondition_id"),

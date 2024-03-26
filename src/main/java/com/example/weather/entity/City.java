@@ -21,7 +21,7 @@ public class City {
     private Double lon; // Longitude
     private Double lat; // Latitude
 
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<WeatherData> weatherDataList = new ArrayList<>();
 
