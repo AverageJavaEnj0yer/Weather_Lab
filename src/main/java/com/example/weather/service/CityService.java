@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.weather.exception.LogException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class CityService {
         return cityRepository.findByLonAndLat(lon, lat);
     }
 
+    @LogException
     public City createCity(City city) {
         logger.info("Creating city");
         if (cityRepository.existsByName(city.getName())) {
@@ -53,6 +55,7 @@ public class CityService {
         }
         return cityRepository.save(city);
     }
+
     public List<City> createBulkCities(List<City> cities) {
         List<City> createdCities = new ArrayList<>();
         for (City city : cities) {
@@ -90,20 +93,16 @@ public class CityService {
     }
 
     public List<City> getCitiesByWeatherDataDate(LocalDate date) {
-        //logger.info("Fetching cities by weather data date: {}", date);
         List<City> cachedCities = weatherDataCache.getCitiesFromCache(date);
         if (cachedCities != null && !cachedCities.isEmpty()) {
             logger.info("Cache was used for date: {}", date);
-            requestCounterService.incrementCounterByDate(date); // Увеличиваем счетчик обращений по дате
+            requestCounterService.incrementCounterByDate(date);
             return cachedCities;
         }
-        // Если результат не найден в кэше или кэш пуст, получаем результат из базы данных
         List<City> cities = cityRepository.findCitiesByWeatherDataDate(date);
         logger.info("Database was used for date: {}", date);
-        // Добавляем результат в кэш
         weatherDataCache.addToCache(date, cities);
-        requestCounterService.incrementCounterByDate(date); // Увеличиваем счетчик обращений по дате
+        requestCounterService.incrementCounterByDate(date);
         return cities;
     }
-
 }
