@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WeatherConditionRepository extends JpaRepository<WeatherCondition, Long> {
     boolean existsByMainAndDescription(String main, String description);
+
     WeatherCondition findByMainAndDescription(String main, String description);
 }
 

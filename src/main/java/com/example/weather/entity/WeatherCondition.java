@@ -1,9 +1,10 @@
 package com.example.weather.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class WeatherCondition {

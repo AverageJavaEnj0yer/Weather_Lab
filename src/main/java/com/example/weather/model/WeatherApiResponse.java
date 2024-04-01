@@ -1,7 +1,8 @@
 package com.example.weather.model;
 
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
 
 
 public class WeatherApiResponse {
