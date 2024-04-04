@@ -20,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -164,24 +165,29 @@ class CityServiceTest {
         testCities.add(new City("City1", 0.0, 0.0));
         testCities.add(new City("City2", 0.0, 0.0));
         testCities.add(new City("City3", 0.0, 0.0));
+
         // Устанавливаем поведение заглушки репозитория
-        when(cityRepository.existsByName("City1")).thenReturn(false);
-        when(cityRepository.existsByName("City2")).thenReturn(true);
-        when(cityRepository.existsByName("City3")).thenReturn(false);
+        when(cityRepository.existsByName(anyString()))
+                .thenAnswer(invocation -> {
+                    String cityName = invocation.getArgument(0);
+                    return cityName.equals("City2");
+                });
         when(cityRepository.save(any(City.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Вызываем метод, который тестируем
         List<City> createdCities = cityService.createBulkCities(testCities);
 
         // Проверяем, что результат соответствует ожидаемому (должны быть добавлены только города, которые еще не существуют)
-        assertEquals(2, createdCities.size());
-        assertTrue(createdCities.contains(testCities.get(0)));
-        assertTrue(createdCities.contains(testCities.get(2)));
+        List<City> expectedCities = testCities.stream()
+                .filter(city -> !city.getName().equals("City2"))
+                .collect(Collectors.toList());
+        assertEquals(expectedCities.size(), createdCities.size());
+        assertTrue(createdCities.containsAll(expectedCities));
+
         // Проверяем, что метод save был вызван только для городов, которые еще не существуют
-        verify(cityRepository, times(1)).save(testCities.get(0));
-        verify(cityRepository, times(0)).save(testCities.get(1));
-        verify(cityRepository, times(1)).save(testCities.get(2));
+        verify(cityRepository, times(expectedCities.size())).save(any(City.class));
     }
+
     @Test
     void testCreateCity_WhenCityAlreadyExists() {
         // Создаем тестовые данные

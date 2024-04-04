@@ -9,9 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,14 +57,20 @@ public class CityService {
     }
 
     public List<City> createBulkCities(List<City> cities) {
-        List<City> createdCities = new ArrayList<>();
-        for (City city : cities) {
-            if (!cityRepository.existsByName(city.getName())) {
-                createdCities.add(cityRepository.save(city));
-            }
-        }
+        List<City> existingCities = cities.stream()
+                .filter(city -> cityRepository.existsByName(city.getName()))
+                .collect(Collectors.toList());
+
+        List<City> createdCities = cities.stream()
+                .filter(city -> !cityRepository.existsByName(city.getName()))
+                .map(cityRepository::save)
+                .collect(Collectors.toList());
+
+        existingCities.forEach(city -> logger.warn("City with name '{}' already exists", city.getName()));
+
         return createdCities;
     }
+
 
     public City updateCity(Long id, City newCityData) {
         logger.info("Updating city with ID: {}", id);
