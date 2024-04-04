@@ -24,7 +24,7 @@ import java.util.Optional;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class CityServiceTest {
+class CityServiceTest {
 
     @Mock
     private CityRepository cityRepository;
