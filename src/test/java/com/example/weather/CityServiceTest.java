@@ -1,10 +1,11 @@
 package com.example.weather;
 
 import com.example.weather.entity.City;
-import com.example.weather.service.CityService;
 import com.example.weather.exception.CityAlreadyExistsException;
 import com.example.weather.cache.WeatherDataCache;
 import com.example.weather.repository.CityRepository;
+import com.example.weather.service.CityService;
+import com.example.weather.service.RequestCounterService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,10 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -28,6 +29,9 @@ public class CityServiceTest {
 
     @Mock
     private WeatherDataCache weatherDataCache;
+
+    @Mock
+    private RequestCounterService requestCounterService;
 
     @InjectMocks
     private CityService cityService;
@@ -163,5 +167,5 @@ public class CityServiceTest {
         assertEquals(expectedCities, actualCities);
         verify(weatherDataCache, times(1)).getCitiesFromCache(date); // Verify cache used
     }
-
 }
+
