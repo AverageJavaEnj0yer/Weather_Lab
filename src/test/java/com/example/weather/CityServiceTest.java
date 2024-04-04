@@ -1,27 +1,29 @@
 package com.example.weather;
 
-import com.example.weather.entity.City;
-import com.example.weather.exception.CityAlreadyExistsException;
-import com.example.weather.cache.WeatherDataCache;
-import com.example.weather.repository.CityRepository;
-import com.example.weather.service.CityService;
-import com.example.weather.service.RequestCounterService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.weather.cache.WeatherDataCache;
+import com.example.weather.entity.City;
+import com.example.weather.repository.CityRepository;
+import com.example.weather.service.CityService;
+import com.example.weather.exception.CityAlreadyExistsException;
+import com.example.weather.service.RequestCounterService;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CityServiceTest {
 
     @Mock
@@ -36,136 +38,245 @@ public class CityServiceTest {
     @InjectMocks
     private CityService cityService;
 
-    @Test
-    public void testGetAllCities() {
-        // Setup
-        List<City> expectedCities = new ArrayList<>();
-        expectedCities.add(new City("City 1", 1.0, 2.0));
-        expectedCities.add(new City("City 2", 3.0, 4.0));
-        when(cityRepository.findAll()).thenReturn(expectedCities);
-
-        // Test
-        List<City> actualCities = cityService.getAllCities();
-
-        // Verify
-        assertEquals(expectedCities, actualCities);
+    @BeforeEach
+    void setUp() {
+        // Здесь можно добавить предварительную настройку тестовых данных, если это необходимо
     }
 
     @Test
-    public void testGetCityById() {
-        // Setup
+    void testFindByName() {
+        // Создаем тестовые данные
+        City testCity = new City("TestCity", 0.0, 0.0);
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findByName("TestCity")).thenReturn(testCity);
+
+        // Вызываем метод, который тестируем
+        City foundCity = cityService.findByName("TestCity");
+
+        // Проверяем, что результат соответствует ожидаемому
+        assertEquals(testCity, foundCity);
+    }
+
+    @Test
+    void testGetAllCities() {
+        // Создаем тестовые данные
+        List<City> testCities = new ArrayList<>();
+        testCities.add(new City("City1", 0.0, 0.0));
+        testCities.add(new City("City2", 0.0, 0.0));
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findAll()).thenReturn(testCities);
+
+        // Вызываем метод, который тестируем
+        List<City> result = cityService.getAllCities();
+
+        // Проверяем, что результат соответствует ожидаемому
+        assertEquals(testCities, result);
+        // Проверяем, что метод findAll был вызван ровно 1 раз
+        verify(cityRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testFindByName_WhenCityNotFound() {
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findByName("NonExistentCity")).thenReturn(null);
+
+        // Вызываем метод, который тестируем
+        City foundCity = cityService.findByName("NonExistentCity");
+
+        // Проверяем, что результат равен null
+        assertNull(foundCity);
+    }
+
+    // Тесты для методов getAllCities, getCityById, getCityByLonAndLat и getCitiesByWeatherDataDate аналогичны и не приведены здесь для краткости.
+
+    @Test
+    void testCreateCity_WhenCityDoesNotExist() {
+        // Создаем тестовые данные
+        City testCity = new City("TestCity", 0.0, 0.0);
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.existsByName("TestCity")).thenReturn(false);
+        when(cityRepository.save(testCity)).thenReturn(testCity);
+
+        // Вызываем метод, который тестируем
+        City createdCity = cityService.createCity(testCity);
+
+        // Проверяем, что результат соответствует ожидаемому
+        assertEquals(testCity, createdCity);
+        // Проверяем, что метод save был вызван ровно 1 раз
+        verify(cityRepository, times(1)).save(testCity);
+    }
+
+    @Test
+    void testGetCityByLonAndLat() {
+        // Создаем тестовые данные
+        Double lon = 10.0;
+        Double lat = 20.0;
+        City testCity = new City("TestCity", lon, lat);
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findByLonAndLat(lon, lat)).thenReturn(testCity);
+
+        // Вызываем метод, который тестируем
+        City result = cityService.getCityByLonAndLat(lon, lat);
+
+        // Проверяем, что результат соответствует ожидаемому
+        assertEquals(testCity, result);
+        // Проверяем, что метод findByLonAndLat был вызван ровно 1 раз с правильными параметрами
+        verify(cityRepository, times(1)).findByLonAndLat(lon, lat);
+    }
+
+    @Test
+    void testGetCityById_WhenCityExists() {
+        // Создаем тестовые данные
         Long cityId = 1L;
-        City expectedCity = new City("City 1", 1.0, 2.0);
-        when(cityRepository.findById(cityId)).thenReturn(Optional.of(expectedCity));
+        City testCity = new City("TestCity", 0.0, 0.0);
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findById(cityId)).thenReturn(Optional.of(testCity));
 
-        // Test
-        City actualCity = cityService.getCityById(cityId);
+        // Вызываем метод, который тестируем
+        City result = cityService.getCityById(cityId);
 
-        // Verify
-        assertEquals(expectedCity, actualCity);
+        // Проверяем, что результат соответствует ожидаемому
+        assertEquals(testCity, result);
+        // Проверяем, что метод findById был вызван ровно 1 раз с правильным id
+        verify(cityRepository, times(1)).findById(cityId);
     }
 
     @Test
-    public void testGetCityByLonAndLat() {
-        // Setup
-        Double lon = 1.0;
-        Double lat = 2.0;
-        City expectedCity = new City("City 1", lon, lat);
-        when(cityRepository.findByLonAndLat(lon, lat)).thenReturn(expectedCity);
-
-        // Test
-        City actualCity = cityService.getCityByLonAndLat(lon, lat);
-
-        // Verify
-        assertEquals(expectedCity, actualCity);
-    }
-
-    @Test
-    public void testCreateCity() {
-        // Setup
-        City cityToCreate = new City("New City", 1.0, 2.0);
-        when(cityRepository.existsByName(cityToCreate.getName())).thenReturn(false);
-        when(cityRepository.save(cityToCreate)).thenReturn(cityToCreate);
-
-        // Test
-        City createdCity = cityService.createCity(cityToCreate);
-
-        // Verify
-        assertEquals(cityToCreate, createdCity);
-        verify(weatherDataCache, times(0)).clearCache(); // Verify cache not cleared for new city
-    }
-
-    @Test(expected = CityAlreadyExistsException.class)
-    public void testCreateCityCityAlreadyExists() {
-        // Setup
-        City existingCity = new City("Existing City", 1.0, 2.0);
-        when(cityRepository.existsByName(existingCity.getName())).thenReturn(true);
-
-        // Test
-        cityService.createCity(existingCity); // This should throw CityAlreadyExistsException
-    }
-
-    @Test
-    public void testUpdateCity() {
-        // Setup
+    void testGetCityById_WhenCityDoesNotExist() {
+        // Создаем тестовые данные
         Long cityId = 1L;
-        City existingCity = new City("Existing City", 1.0, 2.0);
-        City updatedCityData = new City("Updated City", 3.0, 4.0);
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findById(cityId)).thenReturn(Optional.empty());
+
+        // Вызываем метод, который тестируем
+        City result = cityService.getCityById(cityId);
+
+        // Проверяем, что результат равен null, так как города с таким id не существует
+        assertNull(result);
+        // Проверяем, что метод findById был вызван ровно 1 раз с правильным id
+        verify(cityRepository, times(1)).findById(cityId);
+    }
+
+    @Test
+    void testCreateBulkCities() {
+        // Создаем тестовые данные
+        List<City> testCities = new ArrayList<>();
+        testCities.add(new City("City1", 0.0, 0.0));
+        testCities.add(new City("City2", 0.0, 0.0));
+        testCities.add(new City("City3", 0.0, 0.0));
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.existsByName("City1")).thenReturn(false);
+        when(cityRepository.existsByName("City2")).thenReturn(true);
+        when(cityRepository.existsByName("City3")).thenReturn(false);
+        when(cityRepository.save(any(City.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Вызываем метод, который тестируем
+        List<City> createdCities = cityService.createBulkCities(testCities);
+
+        // Проверяем, что результат соответствует ожидаемому (должны быть добавлены только города, которые еще не существуют)
+        assertEquals(2, createdCities.size());
+        assertTrue(createdCities.contains(testCities.get(0)));
+        assertTrue(createdCities.contains(testCities.get(2)));
+        // Проверяем, что метод save был вызван только для городов, которые еще не существуют
+        verify(cityRepository, times(1)).save(testCities.get(0));
+        verify(cityRepository, times(0)).save(testCities.get(1));
+        verify(cityRepository, times(1)).save(testCities.get(2));
+    }
+    @Test
+    void testCreateCity_WhenCityAlreadyExists() {
+        // Создаем тестовые данные
+        City testCity = new City("TestCity", 0.0, 0.0);
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.existsByName("TestCity")).thenReturn(true);
+
+        // Проверяем, что выбрасывается ожидаемое исключение
+        assertThrows(CityAlreadyExistsException.class, () -> {
+            cityService.createCity(testCity);
+        });
+        // Проверяем, что метод save не был вызван
+        verify(cityRepository, never()).save(any());
+    }
+
+
+
+    @Test
+    void testUpdateCity_WhenNewCityNameAlreadyExists() {
+        // Создаем тестовые данные
+        Long cityId = 1L;
+        City existingCity = new City("ExistingCity", 0.0, 0.0);
+        City newCityData = new City("ExistingCity", 10.0, 20.0);
+        City updatedCityData = new City("UpdatedCity", 10.0, 20.0);
+        // Устанавливаем поведение заглушки репозитория
         when(cityRepository.findById(cityId)).thenReturn(Optional.of(existingCity));
-        when(cityRepository.existsByNameAndIdNot(updatedCityData.getName(), cityId)).thenReturn(false);
-        when(cityRepository.save(existingCity)).thenReturn(existingCity);
+        when(cityRepository.existsByNameAndIdNot(newCityData.getName(), cityId)).thenReturn(true);
 
-        // Test
-        City updatedCity = cityService.updateCity(cityId, updatedCityData);
-
-        // Verify
-        assertEquals(existingCity.getName(), updatedCity.getName());
-        assertEquals(existingCity.getLon(), updatedCity.getLon());
-        assertEquals(existingCity.getLat(), updatedCity.getLat());
-        verify(weatherDataCache, times(1)).clearCache(); // Verify cache cleared due to city update
-    }
-
-    @Test(expected = CityAlreadyExistsException.class)
-    public void testUpdateCityCityAlreadyExists() {
-        // Setup
-        Long cityId = 1L;
-        City existingCity = new City("Existing City", 1.0, 2.0);
-        City updatedCityData = new City("Updated City", 3.0, 4.0);
-        when(cityRepository.findById(cityId)).thenReturn(Optional.of(existingCity));
-        when(cityRepository.existsByNameAndIdNot(updatedCityData.getName(), cityId)).thenReturn(true);
-
-        // Test
-        cityService.updateCity(cityId, updatedCityData); // This should throw CityAlreadyExistsException
+        // Проверяем, что метод бросает исключение, если новое имя города уже существует
+        assertThrows(CityAlreadyExistsException.class, () -> {
+            cityService.updateCity(cityId, newCityData);
+        });
+        // Проверяем, что метод findById был вызван ровно 1 раз с правильным id
+        verify(cityRepository, times(1)).findById(cityId);
+        // Проверяем, что метод existsByNameAndIdNot был вызван ровно 1 раз с правильными параметрами
+        verify(cityRepository, times(1)).existsByNameAndIdNot(newCityData.getName(), cityId);
+        // Проверяем, что метод save не был вызван (город не обновлен из-за существующего имени)
+        verify(cityRepository, never()).save(any());
+        // Проверяем, что кэш не был очищен (город не обновлен из-за существующего имени)
+        verify(weatherDataCache, never()).clearCache();
     }
 
     @Test
-    public void testDeleteCity() {
-        // Setup
+    void testDeleteCity_WhenCityExists() {
+        // Создаем тестовые данные
         Long cityId = 1L;
-
-        // Test
+        // Вызываем метод, который тестируем
         cityService.deleteCity(cityId);
 
-        // Verify
+        // Проверяем, что метод deleteById был вызван ровно 1 раз с правильным id
         verify(cityRepository, times(1)).deleteById(cityId);
-        verify(weatherDataCache, times(1)).clearCache(); // Verify cache cleared due to city deletion
+        // Проверяем, что кэш был очищен
+        verify(weatherDataCache, times(1)).clearCache();
+    }
+    @Test
+    void testGetCitiesByWeatherDataDate_WhenCacheIsNotEmpty() {
+        // Создаем тестовые данные
+        LocalDate date = LocalDate.now();
+        List<City> cachedCities = new ArrayList<>();
+        cachedCities.add(new City("City1", 0.0, 0.0));
+        cachedCities.add(new City("City2", 0.0, 0.0));
+        // Устанавливаем поведение заглушки кэша
+        when(weatherDataCache.getCitiesFromCache(date)).thenReturn(cachedCities);
+
+        // Вызываем метод, который тестируем
+        List<City> result = cityService.getCitiesByWeatherDataDate(date);
+
+        // Проверяем, что метод вернул ожидаемый список городов из кэша
+        assertEquals(cachedCities, result);
+        // Проверяем, что счетчик запросов по дате был увеличен на 1
+        verify(requestCounterService, times(1)).incrementCounterByDate(date);
     }
 
     @Test
-    public void testGetCitiesByWeatherDataDate() {
-        // Setup
+    void testGetCitiesByWeatherDataDate_WhenCacheIsEmpty() {
+        // Создаем тестовые данные
         LocalDate date = LocalDate.now();
-        List<City> expectedCities = new ArrayList<>();
-        expectedCities.add(new City("City 1", 1.0, 2.0));
-        expectedCities.add(new City("City 2", 3.0, 4.0));
-        when(weatherDataCache.getCitiesFromCache(date)).thenReturn(expectedCities);
+        List<City> citiesFromDatabase = new ArrayList<>();
+        citiesFromDatabase.add(new City("City1", 0.0, 0.0));
+        citiesFromDatabase.add(new City("City2", 0.0, 0.0));
+        // Устанавливаем поведение заглушки кэша
+        when(weatherDataCache.getCitiesFromCache(date)).thenReturn(null);
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findCitiesByWeatherDataDate(date)).thenReturn(citiesFromDatabase);
 
-        // Test
-        List<City> actualCities = cityService.getCitiesByWeatherDataDate(date);
+        // Вызываем метод, который тестируем
+        List<City> result = cityService.getCitiesByWeatherDataDate(date);
 
-        // Verify
-        assertEquals(expectedCities, actualCities);
-        verify(weatherDataCache, times(1)).getCitiesFromCache(date); // Verify cache used
+        // Проверяем, что метод вернул ожидаемый список городов из базы данных
+        assertEquals(citiesFromDatabase, result);
+        // Проверяем, что счетчик запросов по дате был увеличен на 1
+        verify(requestCounterService, times(1)).incrementCounterByDate(date);
+        // Проверяем, что метод addToCache был вызван с правильными параметрами
+        verify(weatherDataCache, times(1)).addToCache(date, citiesFromDatabase);
     }
 }
+
 

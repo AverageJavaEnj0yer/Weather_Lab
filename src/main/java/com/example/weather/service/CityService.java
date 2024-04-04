@@ -105,4 +105,6 @@ public class CityService {
         requestCounterService.incrementCounterByDate(date);
         return cities;
     }
+
+
 }

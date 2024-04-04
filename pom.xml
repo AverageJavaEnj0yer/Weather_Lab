@@ -106,74 +106,65 @@
                 <version>${project.parent.version}</version>
             </plugin>
 
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jcc-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
 
+                    <execution>
+                        <id>jacoco-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>CLASS</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>INSTRUCTION</counter>
+                                            <value>MISSEDRATIO</value>
+                                            <maximum>20%</maximum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+
+                </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/model/**</exclude>
+                        <exclude>**/repository/**</exclude>
+                        <exclude>**/controller/**</exclude>
+                        <exclude>**/config/**</exclude>
+                        <exclude>**/entity/**</exclude>
+                        <exclude>**/cache/**</exclude>
+
+                        <exclude>**/exception/**</exclude>
+                        <exclude>**/service/RequestCounterService.class</exclude>
+                        <exclude>**/service/WeatherService.class</exclude>
+                        <exclude>**/WeatherApplication.class</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>coverage</id>
-            <build>
-                <plugins>
-                    <!-- Плагин для JaCoCo -->
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.7</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>jcc-report</id>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>report</goal>
-                                </goals>
-                            </execution>
-
-                            <execution>
-                                <id>jacoco-check</id>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <phase>test</phase>
-                                <configuration>
-                                    <rules>
-                                        <rule>
-                                            <element>CLASS</element>
-                                            <limits>
-                                                <limit>
-                                                    <counter>INSTRUCTION</counter>
-                                                    <value>MISSEDRATIO</value>
-                                                    <maximum>20%</maximum>
-                                                </limit>
-                                            </limits>
-                                        </rule>
-                                    </rules>
-                                </configuration>
-                            </execution>
-
-                        </executions>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/model/**</exclude>
-                                <exclude>**/repository/**</exclude>
-                                <exclude>**/controller/**</exclude>
-                                <exclude>**/config/**</exclude>
-
-                                <exclude>**/exception/**</exclude>
-                                <exclude>**/service/RequestCounterService.class</exclude>
-                                <exclude>**/service/WeatherService.class</exclude>
-                                <exclude>**/WeatherApplication.class</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

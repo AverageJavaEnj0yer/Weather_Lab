@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.doNothing;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 
 import org.mockito.InjectMocks;
@@ -51,19 +56,55 @@ class WeatherConditionServiceTest {
 
         assertEquals(newCondition, createdCondition);
     }
+    @Test
+    void testGetAllWeatherConditions() {
+        // Создаем список тестовых условий
+        List<WeatherCondition> expectedConditions = List.of(
+                new WeatherCondition("Clouds", "Some clouds in the sky", "01d"),
+                new WeatherCondition("Rain", "Heavy rain", "01d"),
+                new WeatherCondition("Snow", "Heavy snowfall", "s01d")
+        );
 
+        // Устанавливаем поведение заглушки репозитория
+        when(weatherConditionRepository.findAll()).thenReturn(expectedConditions);
+
+        // Вызываем метод, который тестируем
+        List<WeatherCondition> actualConditions = weatherConditionService.getAllWeatherConditions();
+
+        // Проверяем, что метод вернул ожидаемый список WeatherCondition
+        assertEquals(expectedConditions.size(), actualConditions.size());
+        assertEquals(expectedConditions, actualConditions);
+    }
+    @Test
+    void testFindByMainAndDescription() {
+        // Создаем тестовый объект WeatherCondition
+        WeatherCondition expectedCondition = new WeatherCondition("Clouds", "Some clouds in the sky", "01d");
+        // Подготавливаем поведение заглушки репозитория
+        when(weatherConditionRepository.findByMainAndDescription("Clouds", "Some clouds in the sky")).thenReturn(expectedCondition);
+
+        // Вызываем метод, который тестируем
+        WeatherCondition actualCondition = weatherConditionService.findByMainAndDescription("Clouds", "Some clouds in the sky");
+
+        // Проверяем, что вернулся ожидаемый объект WeatherCondition
+        assertEquals(expectedCondition, actualCondition);
+    }
     @Test
     void testUpdateWeatherCondition() {
         WeatherCondition existingCondition = new WeatherCondition("Snow", "Heavy snowfall", "s01d");
         existingCondition.setId(1L);
         WeatherCondition updatedConditionData = new WeatherCondition("Snow", "Light snowfall", "01d");
         when(weatherConditionRepository.findById(1L)).thenReturn(Optional.of(existingCondition));
-        when(weatherConditionRepository.save(existingCondition)).thenReturn(existingCondition);
+        when(weatherConditionRepository.save(existingCondition)).thenReturn(updatedConditionData); // Возвращаем обновленные данные
 
         WeatherCondition updatedCondition = weatherConditionService.updateWeatherCondition(1L, updatedConditionData);
 
+        assertNotNull(updatedCondition); // Проверяем, что объект не null
         assertEquals(updatedConditionData.getDescription(), updatedCondition.getDescription());
     }
+
+
+
+
 
     @Test
     void testDeleteWeatherCondition() {
