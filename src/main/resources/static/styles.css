@@ -1,3 +1,4 @@
+/* styles.css */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,18 +7,18 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh; /* Чтобы задний фон занимал всю высоту окна просмотра */
-    display: flex; /* Для центрирования содержимого по вертикали */
-    justify-content: center; /* Центрируем содержимое по горизонтали */
-    align-items: center; /* Центрируем содержимое по вертикали */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.8); /* Прозрачный белый фон контейнера */
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 20px;
-    max-width: 400px; /* Максимальная ширина контейнера */
-    text-align: center; /* Выравнивание содержимого по центру */
+    max-width: 400px;
+    text-align: center;
 }
 
 #cityInput {
@@ -27,6 +28,10 @@ body {
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
+}
+.search-container {
+    display: flex;
+    justify-content: center;
 }
 
 #submitButton {
@@ -43,35 +48,86 @@ body {
     background-color: #0056b3;
 }
 
-/* Для выравнивания элементов внутри блока .weather-info */
-/* Для выравнивания элементов внутри блока .weather-info */
 .weather-info {
     display: flex;
-    flex-direction: column; /* Размещаем содержимое по вертикали */
-    align-items: center; /* Центрируем содержимое по горизонтали */
-    text-align: center; /* Выравниваем содержимое по центру */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .temperature-icon {
     display: flex;
-    align-items: center; /* Центрируем содержимое по вертикали */
+    align-items: center;
 }
 
 #temperature {
     font-size: 48px;
-    margin-right: 10px; /* Расстояние между температурой и иконкой */
+    margin-right: 10px;
 }
 
 #weatherIcon {
-    width: 80px; /* Увеличиваем размер иконки */
-    height: 80px; /* Увеличиваем размер иконки */
-    margin-left: 10px; /* Расстояние между температурой и иконкой */
+    width: 80px;
+    height: 80px;
+    margin-left: 10px;
 }
 
 #weatherCondition,
 #humidity {
     margin-top: 10px;
-    font-size: 24px;/* Расстояние между погодными условиями и влажностью */
+    font-size: 24px;
 }
 
+#searchModeToggle {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#searchModeToggle button {
+    padding: 8px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+#searchModeToggle button.active {
+    background-color: #0056b3;
+}
+
+.submit-button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px; /* Add margin-top for spacing */
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+.input-field {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #007bff; /* Change border color when focused */
+}
+
+.search-controls {
+    margin-bottom: 20px; /* Add some space between search controls and weather data */
+}
 

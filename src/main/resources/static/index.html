@@ -3,31 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Погода</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Подключаем файл стилей -->
+    <title>Weather</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include stylesheet file -->
 </head>
 <body>
 <div class="container">
-    <div class="search-container">
-        <input type="text" id="cityInput" placeholder="Введите название города">
-        <button id="submitButton">Получить погоду</button>
+    <div class="top-panel">
+        <div id="searchModeToggle"> <!-- Add toggle switch for search modes -->
+            <button id="citySearchButton" class="active">Search by city</button>
+            <button id="coordinatesSearchButton">Search by coordinates</button>
+        </div>
+        <div id="searchForms">
+            <div class="search-container" id="citySearchContainer"> <!-- Group of elements for city search -->
+                <input type="text" id="cityInput" placeholder="Enter city name">
+                <button id="submitButton">Get weather</button>
+            </div>
+            <div class="search-container" id="coordinatesSearchContainer" style="display: none;"> <!-- Group of elements for coordinates search, initially hidden -->
+                <input type="text" id="latitudeInput" class="input-field" placeholder="Enter latitude">
+                <input type="text" id="longitudeInput" class="input-field" placeholder="Enter longitude">
+                <button id="coordinatesSubmitButton" class="submit-button">Get weather by coordinates</button>
+            </div>
+        </div>
     </div>
-    <div id="weatherData" class="weather-data">
-        <h2 id="cityName">Город</h2>
+    <div id="weatherData" class="weather-data" style="display: none;"> <!-- Weather data, initially hidden -->
+        <h2 id="cityName">City</h2>
         <div class="weather-info">
             <div id="temperatureAndIcon" class="temperature-icon">
-                <p id="temperature">Температура</p>
+                <p id="temperature">Temperature</p>
                 <img id="weatherIcon" src="" alt="Weather Icon">
             </div>
             <div>
-                <p id="weatherCondition">Погодные условия</p>
-                <p id="humidity">Влажность</p>
+                <p id="weatherCondition">Weather conditions</p>
+                <p id="humidity">Humidity</p>
             </div>
         </div>
     </div>
 </div>
 
-</div>
-<script src="scripts.js"></script> <!-- Подключаем JavaScript файл -->
+<script src="scripts.js"></script> <!-- Include JavaScript file -->
 </body>
 </html>
