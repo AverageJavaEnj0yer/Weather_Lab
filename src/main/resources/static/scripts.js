@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cityInput = document.getElementById('cityInput');
     const submitButton = document.getElementById('submitButton');
-    const weatherDataDiv = document.getElementById('weatherData');
 
     submitButton.addEventListener('click', function () {
         const cityName = cityInput.value.trim();
