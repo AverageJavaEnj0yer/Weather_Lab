@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
         temperatureElement.textContent = `${temperatureCelsius}°C`;
         weatherIconElement.src = iconUrl;
         weatherConditionElement.textContent = weatherData.weather[0].description; // Изменение на description
-        humidityElement.textContent = `Влажность: ${weatherData.main.humidity}%`;
+        humidityElement.textContent = `Humidity: ${weatherData.main.humidity}%`;
     }
 
 

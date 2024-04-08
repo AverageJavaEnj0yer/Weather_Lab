@@ -6,6 +6,8 @@ import com.example.weather.repository.WeatherDataRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import com.example.weather.entity.City;
+import java.time.LocalDate;
 
 
 @Service
@@ -33,6 +35,9 @@ public class WeatherService {
         return restTemplate.getForObject(WEATHER_URL_BY_COORDINATES, WeatherApiResponse.class, lat, lon, apiKey);
     }
 
+    public WeatherData findWeatherDataByAllFields(LocalDate date, Double temperature, Double humidity, City city) {
+        return weatherDataRepository.findByDateAndTemperatureAndHumidityAndCity(date, temperature, humidity, city);
+    }
 
     public void createWeatherData(WeatherData weatherData) {
         weatherDataRepository.save(weatherData);

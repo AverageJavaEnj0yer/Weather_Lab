@@ -74,6 +74,13 @@ public class WeatherController {
             cityEntity = cityService.createCity(cityEntity);
         }
 
+        // Check if weather data with the same date, temperature, humidity, and city already exists
+        WeatherData existingWeatherData = weatherService.findWeatherDataByAllFields(weatherData.getDate(), weatherData.getTemperature(), weatherData.getHumidity(), cityEntity);
+        if (existingWeatherData != null) {
+            logger.warn("Weather data entry with identical values already exists");
+            return; // No need to save if identical weather data already exists
+        }
+
         weatherData.setCity(cityEntity);
 
         List<WeatherConditionResponse> weatherConditions = apiResponse.getWeather();
@@ -84,7 +91,10 @@ public class WeatherController {
                 weatherConditionEntity = new WeatherCondition(condition.getMain(), condition.getDescription(), condition.getIcon());
                 weatherConditionEntity = weatherConditionService.createWeatherCondition(weatherConditionEntity);
             }
-            weatherConditionEntities.add(weatherConditionEntity);
+            // Check if the weather condition is already associated with the weather data
+            if (!weatherData.getWeatherConditions().contains(weatherConditionEntity)) {
+                weatherConditionEntities.add(weatherConditionEntity);
+            }
         }
 
         weatherData.setWeatherConditions(weatherConditionEntities);
