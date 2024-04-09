@@ -204,31 +204,58 @@ class CityServiceTest {
     }
 
 
+    @Test
+    void testUpdateCity_CityNotFound() {
+        // Создаем тестовые данные
+        Long id = 1L;
+        City newCityData = new City("NewCity", 1.0, 1.0);
+
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findById(id)).thenReturn(Optional.empty());
+
+        // Вызываем метод, который тестируем
+        City updatedCity = cityService.updateCity(id, newCityData);
+
+        // Проверяем, что результат равен null, так как город с таким id не найден
+        assertNull(updatedCity);
+
+        // Проверяем, что кэш не очищается и ни один метод репозитория не вызывается
+        verify(weatherDataCache, never()).clearCache();
+        verify(cityRepository, never()).existsByNameAndIdNot(any(), any());
+        verify(cityRepository, never()).save(any());
+    }
 
     @Test
-    void testUpdateCity_WhenNewCityNameAlreadyExists() {
+    void testUpdateCity() {
         // Создаем тестовые данные
-        Long cityId = 1L;
-        City existingCity = new City("ExistingCity", 0.0, 0.0);
-        City newCityData = new City("ExistingCity", 10.0, 20.0);
-        City updatedCityData = new City("UpdatedCity", 10.0, 20.0);
-        // Устанавливаем поведение заглушки репозитория
-        when(cityRepository.findById(cityId)).thenReturn(Optional.of(existingCity));
-        when(cityRepository.existsByNameAndIdNot(newCityData.getName(), cityId)).thenReturn(true);
+        Long id = 1L;
+        City existingCity = new City( "OldCity", 0.0, 0.0);
+        City newCityData = new City( "NewCity", 1.0, 1.0);
 
-        // Проверяем, что метод бросает исключение, если новое имя города уже существует
-        assertThrows(CityAlreadyExistsException.class, () -> {
-            cityService.updateCity(cityId, newCityData);
-        });
-        // Проверяем, что метод findById был вызван ровно 1 раз с правильным id
-        verify(cityRepository, times(1)).findById(cityId);
-        // Проверяем, что метод existsByNameAndIdNot был вызван ровно 1 раз с правильными параметрами
-        verify(cityRepository, times(1)).existsByNameAndIdNot(newCityData.getName(), cityId);
-        // Проверяем, что метод save не был вызван (город не обновлен из-за существующего имени)
-        verify(cityRepository, never()).save(any());
-        // Проверяем, что кэш не был очищен (город не обновлен из-за существующего имени)
-        verify(weatherDataCache, never()).clearCache();
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findById(id)).thenReturn(Optional.of(existingCity));
+        when(cityRepository.existsByNameAndIdNot(newCityData.getName(), id)).thenReturn(false);
+        when(cityRepository.save(any())).thenReturn(newCityData);
+
+        // Вызываем метод, который тестируем
+        City updatedCity = cityService.updateCity(id, newCityData);
+
+        // Проверяем, что результат соответствует ожидаемому
+        assertNotNull(updatedCity);
+        assertEquals(newCityData.getName(), updatedCity.getName());
+        assertEquals(newCityData.getLon(), updatedCity.getLon());
+        assertEquals(newCityData.getLat(), updatedCity.getLat());
+
+        // Проверяем, что кэш очищается при изменении имени города
+        verify(weatherDataCache, times(1)).clearCache();
+        // Проверяем, что метод findById вызывается ровно 1 раз с правильным id
+        verify(cityRepository, times(1)).findById(id);
+        // Проверяем, что метод existsByNameAndIdNot вызывается ровно 1 раз с правильными параметрами
+        verify(cityRepository, times(1)).existsByNameAndIdNot(newCityData.getName(), id);
+        // Проверяем, что метод save вызывается ровно 1 раз с правильными параметрами
+        verify(cityRepository, times(1)).save(any());
     }
+
 
     @Test
     void testDeleteCity_WhenCityExists() {

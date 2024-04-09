@@ -36,6 +36,7 @@ class WeatherConditionServiceTest {
     @InjectMocks
     private WeatherConditionService weatherConditionService;
 
+
     @Test
     void testGetWeatherConditionById() {
         WeatherCondition expectedCondition = new WeatherCondition("Clouds", "Some clouds in the sky", "01d");
@@ -102,10 +103,6 @@ class WeatherConditionServiceTest {
         assertEquals(updatedConditionData.getDescription(), updatedCondition.getDescription());
     }
 
-
-
-
-
     @Test
     void testDeleteWeatherCondition() {
         // Arrange
@@ -119,4 +116,6 @@ class WeatherConditionServiceTest {
         // Assert
         verify(weatherConditionRepository, times(1)).deleteById(1L);
     }
+
+
 }
