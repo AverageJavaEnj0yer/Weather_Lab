@@ -46,29 +46,42 @@ function displayWeatherData(city) {
         const weatherElement = document.createElement('div');
         weatherElement.classList.add('weather-item');
 
+        const textContainer = document.createElement('div'); // Контейнер для текста
+        textContainer.classList.add('weather-text');
+
         const dateElement = document.createElement('p');
         dateElement.textContent = `Date: ${weather.date}`;
 
         const temperatureElement = document.createElement('p');
-        const celsiusTemperature = (weather.temperature - 273.15).toFixed(2); // Конвертация из кельвинов в градусы Цельсия
+        const celsiusTemperature = (weather.temperature - 273.15).toFixed(2);
         temperatureElement.textContent = `Temperature: ${celsiusTemperature}°C`;
 
         const humidityElement = document.createElement('p');
-        humidityElement.textContent = `Humidity: ${weather.humidity.toFixed(2)}%`; // Добавляем знак процента и округляем до двух десятичных знаков
+        humidityElement.textContent = `Humidity: ${weather.humidity.toFixed(2)}%`;
 
         const weatherConditionElement = document.createElement('p');
         weatherConditionElement.textContent = `Weather Condition: ${weather.weatherConditions[0].description}`;
 
-        weatherElement.appendChild(dateElement);
-        weatherElement.appendChild(temperatureElement);
-        weatherElement.appendChild(humidityElement);
-        weatherElement.appendChild(weatherConditionElement);
+        textContainer.appendChild(dateElement);
+        textContainer.appendChild(temperatureElement);
+        textContainer.appendChild(humidityElement);
+        textContainer.appendChild(weatherConditionElement);
+
+        const weatherIconElement = document.createElement('img');
+        weatherIconElement.src = `http://openweathermap.org/img/wn/${weather.weatherConditions[0].icon}@2x.png`;
+        weatherIconElement.alt = 'Weather Icon';
+        weatherIconElement.classList.add('weather-icon');
+
+        weatherElement.appendChild(textContainer);
+        weatherElement.appendChild(weatherIconElement);
 
         cityElement.appendChild(weatherElement);
     });
 
     weatherDataContainer.appendChild(cityElement);
 }
+
+
 
 
 

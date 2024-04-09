@@ -9,12 +9,13 @@
 
 <body>
 <div class="container">
+    <a href="index.html" class="back-button">Back to Home</a> <!-- Перемещаем кнопку Back наверх -->
     <h1>Weather Data History</h1>
     <label for="dateInput">Enter date:</label>
     <input type="date" id="dateInput">
     <button onclick="searchByDate()">Search</button>
     <table>
-        <caption>This table displays historical weather data.</caption>
+        <caption> </caption>
         <thead>
         <tr>
             <th></th>
@@ -25,7 +26,6 @@
         </tbody>
     </table>
     <div id="weatherDataContainer"></div> <!-- Элемент для отображения данных о погоде -->
-    <a href="index.html" class="back-button">Back</a> <!-- Кнопка для возврата на предыдущую страницу -->
 </div>
 
 <script src="weather_data_scripts.js"></script> <!-- Подключаем JavaScript файл -->

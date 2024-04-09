@@ -10,19 +10,20 @@
 <div class="container">
     <div class="top-panel">
         <div id="searchModeToggle"> <!-- Add toggle switch for search modes -->
-            <button id="citySearchButton" class="active">Search by city</button>
-            <button id="coordinatesSearchButton">Search by coordinates</button>
+            <button id="citySearchButton" class="active">Search by City</button>
+            <button id="coordinatesSearchButton">Search by Coordinates</button>
             <button class="button view-weather-data-button" onclick="window.location.href='weather_data.html';">View History</button>
+            <button onclick="window.location.href='crud.html';">City Manager</button>
         </div>
         <div id="searchForms">
             <div class="search-container" id="citySearchContainer"> <!-- Group of elements for city search -->
                 <input type="text" id="cityInput" placeholder="Enter city name">
-                <button id="submitButton">Get weather</button>
+                <button id="submitButton">Get Weather</button>
             </div>
             <div class="search-container" id="coordinatesSearchContainer" style="display: none;"> <!-- Group of elements for coordinates search, initially hidden -->
                 <input type="text" id="latitudeInput" class="input-field" placeholder="Enter latitude">
                 <input type="text" id="longitudeInput" class="input-field" placeholder="Enter longitude">
-                <button id="coordinatesSubmitButton" class="submit-button">Get weather by coordinates</button>
+                <button id="coordinatesSubmitButton" class="submit-button">Get Weather by Coordinates</button>
             </div>
         </div>
     </div>
@@ -34,7 +35,7 @@
                 <img id="weatherIcon" src="" alt="Weather Icon">
             </div>
             <div>
-                <p id="weatherCondition">Weather conditions</p>
+                <p id="weatherCondition">Weather Conditions</p>
                 <p id="humidity">Humidity</p>
             </div>
         </div>

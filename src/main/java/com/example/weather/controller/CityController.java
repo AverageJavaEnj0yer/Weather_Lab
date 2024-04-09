@@ -4,14 +4,16 @@ import com.example.weather.entity.City;
 import com.example.weather.service.CityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @RestController
 @RequestMapping("/cities")
 public class CityController {
+    private static final Logger logger = LoggerFactory.getLogger(CityService.class);
 
     private final CityService cityService;
 
@@ -73,7 +75,9 @@ public class CityController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
+        logger.info("Deleting city with ID: {}", id);
         cityService.deleteCity(id);
         return ResponseEntity.noContent().build();
     }
+
 }

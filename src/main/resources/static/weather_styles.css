@@ -36,15 +36,71 @@ body {
 }
 
 .back-button {
-    display: inline-block;
-    margin-top: 20px;
+    margin-top: 21.44px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #FF6B6B; /* Розовато-оранжевый цвет */
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
+    float: right; /* Перемещаем кнопку вправо */
 }
 
 .back-button:hover {
-    background-color: #0056b3;
+    background-color: #FFA07A; /* Цвет при наведении */
 }
+
+
+/* Добавляем стили для кнопки поиска */
+button {
+    background-color: #ff8c00; /* Оранжевый цвет кнопки */
+    color: #fff; /* Белый цвет текста */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета при наведении */
+}
+
+button:hover {
+    background-color: #ff6f00; /* Измененный цвет кнопки при наведении */
+}
+
+/* Добавляем стили для поля выбора даты */
+input[type="date"] {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="date"]:focus {
+    outline: none; /* Убираем обводку при фокусе */
+    border-color: #007bff; /* Изменяем цвет обводки при фокусе */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Добавляем тень при фокусе */
+}
+.weather-item {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.weather-item p {
+    margin: 5px 0;
+}
+.weather-item p:first-child {
+    font-weight: bold;
+}
+
+
+.weather-text {
+    flex: 1; /* Растягиваем этот элемент, чтобы он занимал все доступное пространство */
+}
+
+.weather-icon {
+    margin-left: 2px; /* Добавляем отступ между текстом и иконкой */
+}
+
+

@@ -5,6 +5,7 @@ import com.example.weather.entity.City;
 import com.example.weather.exception.CityAlreadyExistsException;
 import com.example.weather.exception.LogException;
 import com.example.weather.repository.CityRepository;
+import com.example.weather.repository.WeatherDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,19 @@ import java.util.List;
 public class CityService {
     private static final Logger logger = LoggerFactory.getLogger(CityService.class);
     private final CityRepository cityRepository;
+
     private final WeatherDataCache weatherDataCache;
     private final RequestCounterService requestCounterService;
+    private final WeatherDataRepository weatherDataRepository;
 
     @Autowired
-    public CityService(CityRepository cityRepository, WeatherDataCache weatherDataCache, RequestCounterService requestCounterService) {
+    public CityService(CityRepository cityRepository, WeatherDataCache weatherDataCache, RequestCounterService requestCounterService, WeatherDataRepository weatherDataRepository) {
         this.cityRepository = cityRepository;
         this.weatherDataCache = weatherDataCache;
         this.requestCounterService = requestCounterService;
+        this.weatherDataRepository = weatherDataRepository;
     }
+
 
     public City findByName(String name) {
         return cityRepository.findByName(name);
@@ -93,9 +98,11 @@ public class CityService {
     public void deleteCity(Long id) {
         logger.info("Deleting city with ID: {}", id);
         cityRepository.deleteById(id);
-        weatherDataCache.clearCache();
+        weatherDataRepository.deleteByCityId(id); // Удаляем все записи WeatherData, связанные с этим городом
+        weatherDataCache.clearCache(); // Очищаем кеш погодных данных
         logger.info("Weather data cache cleared due to city deletion");
     }
+
 
     public List<City> getCitiesByWeatherDataDate(LocalDate date) {
         List<City> cachedCities = weatherDataCache.getCitiesFromCache(date);
@@ -104,12 +111,14 @@ public class CityService {
             requestCounterService.incrementCounterByDate(date);
             return cachedCities;
         }
-        List<City> cities = cityRepository.findCitiesByWeatherDataDate(date);
+        List<City> cities = cityRepository.findCitiesByWeatherDataDate(date); // Этот метод возвращает все города вместе с погодными данными за указанную дату
+        cities.forEach(city -> city.getWeatherDataList().removeIf(weatherData -> !weatherData.getDate().isEqual(date))); // Удаляем из списка погодных данных все записи, кроме тех, что имеют указанную дату
         logger.info("Database was used for date: {}", date);
         weatherDataCache.addToCache(date, cities);
         requestCounterService.incrementCounterByDate(date);
         return cities;
     }
+
 
 
 }

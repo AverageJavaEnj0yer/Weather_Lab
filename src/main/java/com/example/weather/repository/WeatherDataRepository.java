@@ -10,5 +10,8 @@ import java.time.LocalDate;
 @Repository
 public interface WeatherDataRepository extends JpaRepository<WeatherData, Long> {
     WeatherData findByDateAndTemperatureAndHumidityAndCity(LocalDate date, Double temperature, Double humidity, City city);
+
+    void deleteByCityId(Long cityId);
 }
+
 

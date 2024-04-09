@@ -16,7 +16,7 @@ body {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 20px;
-    max-width: 400px;
+    max-width: 480px;
     text-align: center;
 }
 
@@ -42,7 +42,6 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-
 }
 
 #submitButton:hover {
@@ -63,13 +62,16 @@ body {
 
 #temperature {
     font-size: 48px;
-    margin-right: 10px;
+    margin: 5px 0;
+    margin-right: 10px; /* Устанавливаем отступ справа */
 }
+
 
 #weatherIcon {
     width: 80px;
     height: 80px;
     margin-left: 10px;
+
 }
 
 #weatherCondition,
@@ -102,7 +104,8 @@ body {
 }
 
 .submit-button,
-.view-weather-data-button {
+.view-weather-data-button,
+.crud-menu-button {
     padding: 12px 20px; /* Увеличиваем вертикальный и горизонтальный отступы */
     background-color: #007bff;
     color: #fff;
@@ -116,10 +119,23 @@ body {
 }
 
 .submit-button:hover,
-.view-weather-data-button:hover {
+.view-weather-data-button:hover,
+.crud-menu-button:hover {
     background-color: #0056b3;
 }
 
 .view-weather-data-button {
-    margin-right: 0; /* Убираем правый отступ у кнопки просмотра данных о погоде */
+    margin-right: 10px;
 }
+
+.crud-menu-button {
+    margin-top: 20px;
+}
+.city-item h2 {
+    font-size: 24px;
+}
+#cityName {
+    font-size: 48px;
+    margin: 20px 0 5px 0; /* Устанавливаем верхний отступ 20px */
+}
+

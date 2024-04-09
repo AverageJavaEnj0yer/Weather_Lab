@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function displayWeatherData(weatherData) {
         const temperatureCelsius = Math.round(weatherData.main.temp - 273.15);
-        const iconUrl = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+        const iconUrl = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`;
         const cityNameElement = document.getElementById('cityName');
         const temperatureElement = document.getElementById('temperature');
         const weatherIconElement = document.getElementById('weatherIcon');

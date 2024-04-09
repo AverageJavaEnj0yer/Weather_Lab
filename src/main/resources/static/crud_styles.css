@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/004/493/206/original/modern-city-landscape-buildings-and-architecture-real-estate-silhouette-background-illustration-in-line-simple-geometric-flat-style-vector.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    font-weight: bold;
+}
+
+.form-container input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.form-container button,
+.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover,
+.button:hover {
+    background-color: #0056b3;
+}
+
+.city-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Города распределятся в несколько столбцов, каждый шириной не менее 300px */
+    gap: 20px; /* Расстояние между городами */
+}
+
+
+.city-list li {
+    width: calc(50% - 10px); /* Ширина элемента 50% с учетом отступа между элементами */
+    margin-bottom: 10px;
+}
+
+.city-list li button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.city-list li button:hover {
+    background-color: #c82333;
+}
+
+
+.city-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: calc(50% - 20px); /* Ширина элемента города 50% от ширины контейнера с учетом отступов */
+}
+
+
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.update-button {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.update-button:hover {
+    background-color: #e0a800;
+}
+
+.add-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.add-button:hover {
+    background-color: #218838;
+}
+
+.edit-button {
+    background-color: #4CAF50; /* Зеленый цвет */
+    border: none;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #45a049; /* Темно-зеленый цвет при наведении */
+}
+.back-button {
+    margin-top: 21.44px;
+    float: right;
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
