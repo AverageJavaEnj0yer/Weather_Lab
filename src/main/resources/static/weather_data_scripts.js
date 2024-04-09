@@ -1,12 +1,26 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('/cities/weatherData?date=2024-04-09') // Замените 2024-04-09 на нужную вам дату
+    // Получаем текущую дату
+    const currentDate = new Date().toISOString().slice(0, 10);
+
+    // Устанавливаем текущую дату в значение элемента ввода
+    document.getElementById('dateInput').value = currentDate;
+
+    // Вызываем функцию поиска по текущей дате
+    searchByDate();
+});
+
+function searchByDate() {
+    const dateInput = document.getElementById('dateInput').value;
+    fetch(`/cities/weatherData?date=${dateInput}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('No Answer');
+                throw new Error('No answer');
             }
             return response.json();
         })
         .then(data => {
+            const weatherDataContainer = document.getElementById('weatherDataContainer');
+            weatherDataContainer.innerHTML = ''; // Очищаем контейнер перед добавлением новых данных
             data.forEach(city => {
                 displayWeatherData(city);
             });
@@ -15,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
             alert('Failed to fetch weather data. Please try again later.');
         });
-});
+}
 
 function displayWeatherData(city) {
     const weatherDataContainer = document.getElementById('weatherDataContainer');
@@ -36,10 +50,11 @@ function displayWeatherData(city) {
         dateElement.textContent = `Date: ${weather.date}`;
 
         const temperatureElement = document.createElement('p');
-        temperatureElement.textContent = `Temperature: ${weather.temperature}`;
+        const celsiusTemperature = (weather.temperature - 273.15).toFixed(2); // Конвертация из кельвинов в градусы Цельсия
+        temperatureElement.textContent = `Temperature: ${celsiusTemperature}°C`;
 
         const humidityElement = document.createElement('p');
-        humidityElement.textContent = `Humidity: ${weather.humidity}`;
+        humidityElement.textContent = `Humidity: ${weather.humidity.toFixed(2)}%`; // Добавляем знак процента и округляем до двух десятичных знаков
 
         const weatherConditionElement = document.createElement('p');
         weatherConditionElement.textContent = `Weather Condition: ${weather.weatherConditions[0].description}`;
@@ -54,4 +69,6 @@ function displayWeatherData(city) {
 
     weatherDataContainer.appendChild(cityElement);
 }
+
+
 

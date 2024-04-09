@@ -1,0 +1,50 @@
+/* weather_styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://images.hdqwalls.com/wallpapers/buildings-city-silhouette-10k-tk.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Добавляем прозрачный белый фон контейнеру */
+    border-radius: 10px; /* Добавляем скругление углов контейнера */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Добавляем тень контейнеру */
+}
+
+.city-item {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.9); /* Добавляем прозрачный белый фон элементам */
+    border-radius: 5px; /* Добавляем скругление углов элементов */
+}
+
+.weather-item {
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.weather-item p {
+    margin: 5px 0;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
