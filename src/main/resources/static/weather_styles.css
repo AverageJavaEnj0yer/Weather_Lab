@@ -25,16 +25,6 @@ body {
     border-radius: 5px; /* Добавляем скругление углов элементов */
 }
 
-.weather-item {
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-    margin-top: 10px;
-}
-
-.weather-item p {
-    margin: 5px 0;
-}
-
 .back-button {
     margin-top: 21.44px;
     padding: 10px 20px;

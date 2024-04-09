@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
 @RestController
 @RequestMapping("/cities")
 public class CityController {
-    private static final Logger logger = LoggerFactory.getLogger(CityService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CityController.class);
+
 
     private final CityService cityService;
 
