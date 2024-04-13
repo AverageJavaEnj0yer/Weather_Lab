@@ -64,12 +64,12 @@ public class CityService {
     public List<City> createBulkCities(List<City> cities) {
         List<City> existingCities = cities.stream()
                 .filter(city -> cityRepository.existsByName(city.getName()))
-                .toList(); // Заменяем collect(Collectors.toList()) на toList()
+                .toList();
 
         List<City> createdCities = cities.stream()
                 .filter(city -> !cityRepository.existsByName(city.getName()))
                 .map(cityRepository::save)
-                .toList(); // Заменяем collect(Collectors.toList()) на toList()
+                .toList();
 
         existingCities.forEach(city -> logger.warn("City with name '{}' already exists", city.getName()));
         return createdCities;

@@ -13,8 +13,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Weather</name>
     <description>Weather</description>
+
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <sonar.organization>averagejavaenj0yer</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>

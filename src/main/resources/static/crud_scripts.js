@@ -16,6 +16,7 @@ function loadCities() {
                 const cityDiv = document.createElement('div');
                 cityDiv.innerHTML = `
                     <h3>${city.name}</h3>
+                    <p>Longitude: ${city.lon}, Latitude: ${city.lat}</p>
                     <button class="button edit-button" onclick="editCity(${city.id})">Edit</button>
                     <button class="button delete-button" onclick="deleteCity(${city.id})">Delete</button>
                 `;
@@ -75,6 +76,7 @@ function isValidLongitude(longitude) {
 function isValidLatitude(latitude) {
     return /^-?(\d+(\.\d+)?|90)$/.test(latitude) && parseFloat(latitude) >= -90 && parseFloat(latitude) <= 90;
 }
+
 function deleteCity(cityId) {
     if (confirm('Are you sure you want to delete this city?')) {
         fetch(`/cities/${cityId}`, {

@@ -13,6 +13,8 @@ import com.example.weather.repository.CityRepository;
 import com.example.weather.service.CityService;
 import com.example.weather.exception.CityAlreadyExistsException;
 import com.example.weather.service.RequestCounterService;
+import com.example.weather.repository.WeatherDataRepository;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,9 @@ class CityServiceTest {
     @Mock
     private RequestCounterService requestCounterService;
 
+    @Mock
+    private WeatherDataRepository weatherDataRepository;
+
     @InjectMocks
     private CityService cityService;
 
@@ -44,6 +49,19 @@ class CityServiceTest {
         // Здесь можно добавить предварительную настройку тестовых данных, если это необходимо
     }
 
+    @Test
+    void testDeleteCity() {
+        // Arrange
+        Long cityId = 1L;
+
+        // Act
+        cityService.deleteCity(cityId);
+
+        // Assert
+        verify(cityRepository, times(1)).deleteById(cityId);
+        verify(weatherDataRepository, times(1)).deleteByCityId(cityId);
+        verify(weatherDataCache, times(1)).clearCache();
+    }
     @Test
     void testFindByName() {
         // Создаем тестовые данные
@@ -106,6 +124,8 @@ class CityServiceTest {
         // Проверяем, что метод save был вызван ровно 1 раз
         verify(cityRepository, times(1)).save(testCity);
     }
+
+
 
     @Test
     void testGetCityByLonAndLat() {
@@ -204,6 +224,7 @@ class CityServiceTest {
     }
 
 
+
     @Test
     void testUpdateCity_CityNotFound() {
         // Создаем тестовые данные
@@ -256,19 +277,27 @@ class CityServiceTest {
         verify(cityRepository, times(1)).save(any());
     }
 
-
     @Test
-    void testDeleteCity_WhenCityExists() {
+    void testUpdateCity_WhenCityAlreadyExists() {
         // Создаем тестовые данные
-        Long cityId = 1L;
-        // Вызываем метод, который тестируем
-        cityService.deleteCity(cityId);
+        Long id = 1L;
+        City existingCity = new City("ExistingCity", 0.0, 0.0);
+        City newCityData = new City("NewCity", 1.0, 1.0);
 
-        // Проверяем, что метод deleteById был вызван ровно 1 раз с правильным id
-        verify(cityRepository, times(1)).deleteById(cityId);
-        // Проверяем, что кэш был очищен
+        // Устанавливаем поведение заглушки репозитория
+        when(cityRepository.findById(id)).thenReturn(Optional.of(existingCity));
+        when(cityRepository.existsByNameAndIdNot(newCityData.getName(), id)).thenReturn(true);
+
+        // Проверяем, что выбрасывается ожидаемое исключение
+        assertThrows(CityAlreadyExistsException.class, () -> {
+            cityService.updateCity(id, newCityData);
+        });
+        // Проверяем, что кэш очищается, так как город с таким именем уже существует
         verify(weatherDataCache, times(1)).clearCache();
+        // Проверяем, что метод save не вызывается
+        verify(cityRepository, never()).save(any());
     }
+
     @Test
     void testGetCitiesByWeatherDataDate_WhenCacheIsNotEmpty() {
         // Создаем тестовые данные
