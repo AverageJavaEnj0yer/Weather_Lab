@@ -49,7 +49,7 @@ public class WeatherConditionService {
             WeatherCondition weatherConditionToUpdate = optionalWeatherCondition.get();
             weatherConditionToUpdate.setDescription(newWeatherConditionData.getDescription());
             WeatherCondition updatedWeatherCondition = weatherConditionRepository.save(weatherConditionToUpdate);
-            clearCacheIfWeatherConditionUpdated(updatedWeatherCondition); // Очистка кэша при обновлении
+            clearCacheIfWeatherConditionUpdated(updatedWeatherCondition);
             return updatedWeatherCondition;
         }
         return null;
