@@ -98,8 +98,8 @@ public class CityService {
     public void deleteCity(Long id) {
         logger.info("Deleting city with ID: {}", id);
         cityRepository.deleteById(id);
-        weatherDataRepository.deleteByCityId(id); // Удаляем все записи WeatherData, связанные с этим городом
-        weatherDataCache.clearCache(); // Очищаем кеш погодных данных
+        weatherDataRepository.deleteByCityId(id);
+        weatherDataCache.clearCache();
         logger.info("Weather data cache cleared due to city deletion");
     }
 
