@@ -1,14 +1,13 @@
--- Создание таблицы City
 CREATE TABLE IF NOT EXISTS City (
-                                    id INT AUTO_INCREMENT PRIMARY KEY,
+                                    id SERIAL PRIMARY KEY,
                                     name VARCHAR(255) NOT NULL,
-                                    lon DOUBLE NOT NULL,
-                                    lat DOUBLE NOT NULL
+                                    lon DOUBLE PRECISION NOT NULL,
+                                    lat DOUBLE PRECISION NOT NULL
 );
 
 -- Создание таблицы WeatherCondition
 CREATE TABLE IF NOT EXISTS WeatherCondition (
-                                                id INT AUTO_INCREMENT PRIMARY KEY,
+                                                id SERIAL PRIMARY KEY,
                                                 main VARCHAR(255) NOT NULL,
                                                 description VARCHAR(255) NOT NULL,
                                                 icon VARCHAR(255) NOT NULL
@@ -16,10 +15,10 @@ CREATE TABLE IF NOT EXISTS WeatherCondition (
 
 -- Создание таблицы WeatherData
 CREATE TABLE IF NOT EXISTS WeatherData (
-                                           id INT AUTO_INCREMENT PRIMARY KEY,
+                                           id SERIAL PRIMARY KEY,
                                            date DATE NOT NULL,
-                                           temperature DOUBLE NOT NULL,
-                                           humidity DOUBLE NOT NULL,
+                                           temperature DOUBLE PRECISION NOT NULL,
+                                           humidity DOUBLE PRECISION NOT NULL,
                                            city_id INT,
                                            FOREIGN KEY (city_id) REFERENCES City(id)
 );
