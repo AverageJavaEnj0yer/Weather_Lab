@@ -58,7 +58,7 @@ public class WeatherConditionService {
     public void deleteWeatherCondition(Long id) {
         logger.info("Deleting weather condition with ID: {}", id);
         weatherConditionRepository.deleteById(id);
-        clearCacheIfWeatherConditionDeleted(id); // Очистка кэша при удалении
+        clearCacheIfWeatherConditionDeleted(id);
     }
 
     private void clearCacheIfWeatherConditionUpdated(WeatherCondition updatedWeatherCondition) {
