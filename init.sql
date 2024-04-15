@@ -24,13 +24,11 @@ CREATE TABLE WeatherData (
                              date DATE NOT NULL,
                              temperature DOUBLE PRECISION NOT NULL,
                              humidity DOUBLE PRECISION NOT NULL,
-                             city_id INT,
-                             FOREIGN KEY (city_id) REFERENCES City(id)
+                             city_id INT REFERENCES City(id)
 );
 
 CREATE TABLE WeatherData_WeatherCondition (
-                                              weatherData_id INT,
-                                              weatherCondition_id INT,
-                                              FOREIGN KEY (weatherData_id) REFERENCES WeatherData(id),
-                                              FOREIGN KEY (weatherCondition_id) REFERENCES WeatherCondition(id)
+                                              weatherData_id INT REFERENCES WeatherData(id),
+                                              weatherCondition_id INT REFERENCES WeatherCondition(id),
+                                              PRIMARY KEY (weatherData_id, weatherCondition_id)
 );
