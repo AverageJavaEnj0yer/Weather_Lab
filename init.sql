@@ -1,4 +1,3 @@
-
 CREATE TABLE City (
                       id SERIAL PRIMARY KEY,
                       name VARCHAR(255) NOT NULL,
@@ -6,12 +5,19 @@ CREATE TABLE City (
                       lat DOUBLE PRECISION NOT NULL
 );
 
+INSERT INTO City (name, lon, lat) VALUES ('Москва', 37.6173, 55.7558);
+INSERT INTO City (name, lon, lat) VALUES ('Санкт-Петербург', 30.3351, 59.9343);
+
 CREATE TABLE WeatherCondition (
                                   id SERIAL PRIMARY KEY,
                                   main VARCHAR(255) NOT NULL,
                                   description VARCHAR(255) NOT NULL,
                                   icon VARCHAR(255) NOT NULL
 );
+
+INSERT INTO WeatherCondition (main, description, icon) VALUES ('Clear', 'ясно', 'clear-sky');
+INSERT INTO WeatherCondition (main, description, icon) VALUES ('Clouds', 'облачно', 'cloudy');
+INSERT INTO WeatherCondition (main, description, icon) VALUES ('Rain', 'дождь', 'rain');
 
 CREATE TABLE WeatherData (
                              id SERIAL PRIMARY KEY,
