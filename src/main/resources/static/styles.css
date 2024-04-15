@@ -5,34 +5,38 @@ body {
     background-image: url('https://images2.alphacoders.com/102/1027374.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+
 .container {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 20px;
-    max-width: 480px;
+    max-width: 100%;
     text-align: center;
 }
 
 #cityInput {
-    width: 200px;
+    width: 80%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
+
 }
 
 .search-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 #submitButton {
     padding: 12px 20px; /* Увеличиваем вертикальный и горизонтальный отступы */
@@ -87,6 +91,7 @@ body {
 }
 
 #searchModeToggle button {
+
     padding: 12px 20px; /* Увеличиваем вертикальный и горизонтальный отступы */
     margin-right: 10px;
     border: none;
