@@ -145,20 +145,59 @@ body {
     margin: 20px 0 5px 0; /* Устанавливаем верхний отступ 20px */
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
+    body {
+        background-size: cover;
+        background-position: left 50%;
+        background-position-x: 54%;
+    }
+
     .container {
-        padding: 10px; /* Reduced from 20px */
+        max-width: none;
+        width: 70%;
+        padding: 10px;
     }
-}
-@media (max-width: 480px) {
+
     #cityInput {
-        width: 100%; /* Changed from 200px */
-        box-sizing: border-box;
+        width: calc(100% - 40px);
     }
-}
-@media (max-width: 480px) {
+
+    #submitButton {
+        margin-top: 10px; /* Add margin-top */
+    }
+
     .search-container {
-        flex-direction: column; /* Changed from row */
-        align-items: stretch; /* Changed from center */
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #searchModeToggle {
+        flex-direction: column; /* Change flex-direction to column */
+    }
+
+    #searchModeToggle button {
+        width: 100%;
+margin-bottom: 10px;
+    }
+
+    .weather-info {
+        align-items: stretch;
+justify-content: space-between;
+    }
+
+    #temperature {
+        font-size: 36px;
+        padding-left: 20%;
+        align-self: flex-end;
+    }
+
+    #weatherIcon {
+        width: 60px;
+height: 60px;
+    }
+
+    #weatherCondition,
+    #humidity {
+        font-size: 20px; /* Reduce font-size */
     }
 }
