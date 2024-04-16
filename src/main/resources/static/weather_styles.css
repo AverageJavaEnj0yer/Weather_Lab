@@ -13,27 +13,27 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8); /* Добавляем прозрачный белый фон контейнеру */
-    border-radius: 10px; /* Добавляем скругление углов контейнера */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Добавляем тень контейнеру */
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .city-item {
     border: 1px solid #ccc;
     margin-bottom: 20px;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.9); /* Добавляем прозрачный белый фон элементам */
-    border-radius: 5px; /* Добавляем скругление углов элементов */
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
 }
 
 .back-button {
     margin-top: 21.44px;
     padding: 10px 20px;
-    background-color: #FF6B6B; /* Розовато-оранжевый цвет */
+    background-color: #FF6B6B;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
-    float: right; /* Перемещаем кнопку вправо */
+    float: right;
 }
 
 .back-button:hover {
