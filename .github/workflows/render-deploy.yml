@@ -3,7 +3,7 @@ name: Render Spring POC hook example
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 jobs:
@@ -19,11 +19,12 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Build with Maven
-        uses: maven-actions/maven-action@master
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
         with:
-          goals: clean package
+          tasks: build
           java-home: ${{ env.JAVA_HOME_17_X64 }}
+          publish-atoms: false
 
       - name: Trigger Render deploy hook
         run: curl ${{secrets.RENDER_DEPLOY_HOOK}}
