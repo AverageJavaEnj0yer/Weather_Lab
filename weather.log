@@ -1,0 +1,17 @@
+2024-04-15 10:40:58.564 [main] INFO  c.e.w.WeatherConditionServiceTest - Starting WeatherConditionServiceTest using Java 21.0.2 with PID 22260 (started by danik in A:\JAVA\Lab1\Weather)
+2024-04-15 10:40:58.565 [main] INFO  c.e.w.WeatherConditionServiceTest - No active profile set, falling back to 1 default profile: "default"
+2024-04-15 10:41:04.484 [main] INFO  c.e.w.WeatherConditionServiceTest - Started WeatherConditionServiceTest in 6.189 seconds (process running for 8.909)
+2024-04-15 10:41:04.545 [main] INFO  c.e.w.s.WeatherConditionService - Creating weather condition
+2024-04-15 10:41:04.553 [main] INFO  c.e.w.s.WeatherConditionService - Fetching weather condition by ID: 1
+2024-04-15 10:41:04.558 [main] INFO  c.e.w.s.WeatherConditionService - Deleting weather condition with ID: 1
+2024-04-15 10:41:04.558 [main] INFO  c.e.w.s.WeatherConditionService - Weather data cache cleared due to deletion of weather condition with ID: 1
+2024-04-15 10:41:04.561 [main] INFO  c.e.w.s.WeatherConditionService - Updating weather condition with ID: 1
+2024-04-15 10:41:04.562 [main] INFO  c.e.w.s.WeatherConditionService - Weather data cache cleared due to update in weather condition
+2024-04-15 10:41:04.565 [main] INFO  c.e.w.s.WeatherConditionService - Fetching weather condition by main: Clouds and description: Some clouds in the sky
+2024-04-15 10:41:04.569 [main] INFO  c.e.w.s.WeatherConditionService - Fetching all weather conditions
+2024-04-15 10:41:04.576 [main] INFO  c.e.w.service.WeatherDataService - Deleting weather data with ID: 1
+2024-04-15 10:41:04.578 [main] INFO  c.e.w.service.WeatherDataService - Fetching weather data by ID: 1
+2024-04-15 10:41:04.579 [main] INFO  c.e.w.service.WeatherDataService - Creating weather data
+2024-04-15 10:41:04.582 [main] INFO  c.e.w.service.WeatherDataService - Updating weather data with ID: 1
+2024-04-15 10:41:04.585 [main] INFO  c.e.w.service.WeatherDataService - Updating weather data with ID: 1
+2024-04-15 10:41:04.587 [main] INFO  c.e.w.service.WeatherDataService - Fetching all weather data
