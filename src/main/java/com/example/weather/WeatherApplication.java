@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.example.weather.repository")
 public class WeatherApplication {
-
+//ewwe
     public static void main(String[] args) {
         SpringApplication.run(WeatherApplication.class, args);
     }
